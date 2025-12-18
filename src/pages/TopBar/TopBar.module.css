@@ -1,0 +1,250 @@
+/* Container Logic */
+.container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- 1. TOP STRIP STYLES --- */
+.topStrip {
+  background-color: var(--Black_Color);
+  color: #e2e8f0;
+  font-size: var(--Font_Size_1);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1100;
+}
+
+.stripContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.locationPill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.rightStripGroup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.emailGroup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.contactLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-family: var(--Font_Family);
+}
+
+.contactLink:hover {
+  color: var(--Primary_Color);
+}
+
+.bookNowBtnSmall {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--Primary_Color);
+  border: 1px solid var(--Primary_Color);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--Font_Family);
+}
+
+.bookNowBtnSmall:hover {
+  background-color: white;
+  color: var(--Primary_Color);
+  border-color: white;
+}
+
+/* --- 2. MAIN NAVIGATION STYLES (Sticky) --- */
+.mainNav {
+  background: var(--Background_Color);
+  padding: 16px 0;
+  border: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  transition: box-shadow 0.3s ease, background 0.3s ease, padding 0.3s ease;
+}
+
+/* Sticky Shadow */
+.stickyShadow {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 12px 0;
+}
+
+.navContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo Group - Removed Gap */
+.logoGroup {
+  display: flex;
+  align-items: center;
+  /* gap: 12px;  <-- REMOVED gap */
+  text-decoration: none;
+}
+
+.logoImage {
+  height: 58px; /* Adjust this height if your logo image looks too small or too big */
+  width: auto;
+  object-fit: contain;
+}
+
+/* .brandName removed entirely */
+
+.navLinks {
+  display: flex;
+  gap: 32px;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: var(--Grey_Color);
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.2s;
+  font-family: var(--Font_Family);
+}
+
+.navLinks a:hover {
+  color: var(--Primary_Color);
+}
+
+.linkActive {
+  color: var(--Primary_Color) !important;
+  font-weight: 700 !important;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--Black_Color);
+}
+
+/* --- 3. MOBILE MENU STYLES --- */
+.mobileMenuContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--White_Color);
+  border-bottom: none;
+  box-shadow: none;
+
+  /* Default closed state */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  z-index: 999;
+}
+
+/* OPEN STATE */
+.menuOpen {
+  max-height: 500px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+}
+
+.mobileLinks a {
+  text-decoration: none;
+  color: var(--Black_Color);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-family: var(--Font_Family);
+}
+
+.mobileBtnWrapper {
+  margin-top: 10px;
+}
+
+.contactBtnMobile {
+  display: block;
+  width: 100%;
+  background-color: var(--Primary_Color);
+  color: white;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .navLinks {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: block;
+  }
+
+  /* Adjust strip for tablet/mobile */
+  .stripContent {
+    display: flex;
+  }
+
+  .locationPill {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .topStrip {
+    display: none;
+  }
+
+  .logoImage {
+    height: 40px;
+  }
+}

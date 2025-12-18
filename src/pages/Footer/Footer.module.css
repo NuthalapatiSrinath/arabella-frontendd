@@ -1,0 +1,196 @@
+/* Footer.module.css */
+
+.footer {
+  background-color: var(--Black_Color);
+  color: var(--White_Color);
+  padding: 60px 0 20px 0;
+  font-family: var(--Font_Family);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* --- Brand Column --- */
+.brandColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoImage {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brandName {
+  font-family: var(--Font_Brand); /* Suez One */
+  font-size: 24px;
+  color: var(--White_Color);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tagline {
+  color: var(--Grey_Color);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.socialRow {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--White_Color);
+  transition: all 0.3s ease;
+}
+
+.socialIcon:hover {
+  background-color: var(--Primary_Color);
+  transform: translateY(-3px);
+}
+
+/* --- Link Columns --- */
+.linkColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--White_Color);
+  font-family: var(--Font_Brand); /* Matching headings style */
+  letter-spacing: 0.5px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list a {
+  color: var(--Grey_Color);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  position: relative;
+  width: fit-content;
+}
+
+.list a:hover {
+  color: var(--Primary_Color);
+  padding-left: 5px;
+}
+
+/* --- Contact Column --- */
+.contactColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--Grey_Color);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contactItem a {
+  color: var(--Grey_Color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactItem a:hover {
+  color: var(--Primary_Color);
+}
+
+.icon {
+  color: var(--Primary_Color);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --- Copyright --- */
+.copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  text-align: center;
+}
+
+.copyright p {
+  color: var(--Grey_Color);
+  font-size: 13px;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 40px;
+  }
+
+  .brandColumn {
+    grid-column: 1 / -1; /* Spans full width on tablet */
+    text-align: center;
+    align-items: center;
+  }
+
+  .tagline {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .brandColumn,
+  .linkColumn,
+  .contactColumn {
+    align-items: center;
+  }
+
+  .list a:hover {
+    padding-left: 0; /* Remove shift effect on mobile */
+    color: var(--Primary_Color);
+  }
+}
