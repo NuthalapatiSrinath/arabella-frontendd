@@ -1,0 +1,343 @@
+/* SignatureDining.module.css */
+
+.diningSection {
+  background-color: #f9f9f9; /* Slight off-white background to separate sections */
+  padding: 80px 0;
+  font-family: var(--Font_Family, sans-serif);
+}
+
+.container {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  /* padding: 0 24px; */
+}
+
+/* --- Header Section --- */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.dashLine {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 300;
+  margin-top: -10px; /* Aligns dash with top of text */
+}
+
+.mainTitle {
+  font-family: "Times New Roman", serif; /* Serif font for elegance */
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #222;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.headerContent {
+  max-width: 500px;
+}
+
+.headerDesc {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #c5a365; /* Gold/Brown color */
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: gap 0.2s ease;
+}
+
+.exploreLink:hover {
+  gap: 8px; /* Slide arrow effect */
+}
+
+/* --- Cards Grid --- */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Makes images perfectly square */
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.cardLabel {
+  font-family: var(--Font_Family, sans-serif);
+  font-size: 0.85rem;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.smallDash {
+  color: #ccc;
+}
+
+.cardText {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr; /* 2 cols */
+  }
+}
+
+@media (max-width: 600px) {
+  .headerRow {
+    flex-direction: column;
+  }
+
+  .mainTitle {
+    font-size: 2.5rem;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr; /* 1 col */
+  }
+}
+/* SignatureDining.module.css */
+
+.diningSection {
+  background-color: #f9f9f9;
+  padding: 80px 0;
+  font-family: var(--Font_Family, sans-serif);
+  overflow: hidden; /* Prevents scrollbar flickering during slide */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Header Section --- */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.dashLine {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 300;
+  margin-top: -10px;
+}
+
+.mainTitle {
+  font-family: "Times New Roman", serif;
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #222;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.headerContent {
+  max-width: 500px;
+}
+
+.headerDesc {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #c5a365;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: gap 0.2s ease;
+}
+
+.exploreLink:hover {
+  gap: 8px;
+}
+
+/* --- Carousel Wrapper --- */
+.carouselWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* --- Navigation Buttons --- */
+.navBtn {
+  background: transparent;
+  border: 1px solid #c5a365; /* Gold Border */
+  color: #c5a365;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Circle shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.navBtn:hover {
+  background: #c5a365;
+  color: white;
+}
+
+/* Positioning buttons on the sides */
+.prevBtn {
+  margin-right: 20px;
+}
+
+.nextBtn {
+  margin-left: 20px;
+}
+
+/* --- Cards Grid --- */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Animation for smooth transition when items change */
+.fadeCard {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.cardLabel {
+  font-family: var(--Font_Family, sans-serif);
+  font-size: 0.85rem;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.smallDash {
+  color: #ccc;
+}
+
+.cardText {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .cardsGrid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+
+  /* Hide arrows on mobile, or adjust layout */
+  .navBtn {
+    display: none;
+  }
+}

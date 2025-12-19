@@ -1,0 +1,141 @@
+.pageContainer {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-top: 120px; /* Space for TopBar */
+  padding-bottom: 80px;
+}
+
+.contentWrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-start; /* Critical for sticky sidebar */
+  gap: 40px;
+  position: relative;
+}
+
+/* --- STICKY SIDEBAR (Reused logic) --- */
+.sidebarColumn {
+  width: 350px;
+  flex-shrink: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 130px; /* Sticks below TopBar */
+  z-index: 40;
+  height: fit-content;
+}
+
+/* --- RIGHT COLUMN (Details) --- */
+.detailsColumn {
+  flex: 1;
+  background: white;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  min-width: 0;
+}
+
+/* Image Gallery */
+.mainImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 30px;
+  border-radius: 2px;
+}
+
+/* Title & Icons */
+.title {
+  font-family: "Times New Roman", serif;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.iconsRow {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.iconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.iconItem svg {
+  color: #333;
+}
+
+/* Description */
+.description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Sections (Capacity, Amenities) */
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 300; /* Thin font like image */
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.gridList {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 15px 40px;
+  margin-bottom: 40px;
+}
+
+.gridItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #eee;
+}
+
+.label {
+  color: #888;
+}
+.value {
+  color: #333;
+  font-weight: 500;
+}
+
+.amenitiesList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.amenityItem {
+  color: #666;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+  .sidebarColumn {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+}

@@ -1,0 +1,76 @@
+/* ContactUs.module.css */
+
+.pageWrapper {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #fff;
+  font-family: var(--Font_Family, sans-serif);
+}
+
+/* --- New Hero Section (Gallery Style) --- */
+.heroSection {
+  height: 60vh; /* Matches Gallery height */
+  /* Image of a welcoming hotel reception or lobby */
+  background-image: url("https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-bottom: 0; /* Removing bottom margin to flow into content */
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: rgba(0, 0, 0, 0.5); Dark overlay for text contrast */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.heroOverlay h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 4rem;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.heroOverlay p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  max-width: 600px;
+}
+
+/* Map Section */
+.mapSection {
+  width: 100%;
+  height: 500px;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .heroSection {
+    height: 50vh;
+  }
+
+  .heroOverlay h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroOverlay p {
+    font-size: 1rem;
+  }
+}

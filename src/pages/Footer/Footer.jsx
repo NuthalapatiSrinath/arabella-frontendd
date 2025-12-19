@@ -19,19 +19,18 @@ const Footer = () => {
           {/* --- Column 1: Brand Info --- */}
           <div className={styles.brandColumn}>
             <div className={styles.logoRow}>
-              <img
-                src="/logo.png"
-                alt="Arabella Logo"
-                className={styles.logoImage}
-              />
               <h2 className={styles.brandName}>ARABELLA</h2>
+              <span className={styles.brandSub}>MOTOR INN</span>
             </div>
+
             <p className={styles.tagline}>
-              Redefining beauty with advanced aesthetic treatments and
-              personalized care. Experience world-class dermatology and wellness
-              services.
+              Experience the perfect blend of coastal luxury and comfort.
+              Whether for business or leisure, Arabella Motor Inn is your home
+              away from home on the Gold Coast.
             </p>
+
             <div className={styles.socialRow}>
+              {/* ... keep social icons same as before ... */}
               <a href="#s" className={styles.socialIcon} aria-label="Facebook">
                 <Facebook size={18} />
               </a>
@@ -58,7 +57,7 @@ const Footer = () => {
                 <Link to="/about">About Us</Link>
               </li>
               <li>
-                <Link to="/treatments">Treatments</Link>
+                <Link to="/rooms">Accommodation</Link>
               </li>
               <li>
                 <Link to="/gallery">Gallery</Link>
@@ -80,58 +79,61 @@ const Footer = () => {
                 <Link to="/terms">Terms & Conditions</Link>
               </li>
               <li>
-                <Link to="/faq">FAQ</Link>
+                <Link to="/faq">Guest FAQ</Link>
               </li>
               <li>
-                <Link to="/contact">Book Appointment</Link>
+                <Link to="/">Book a Stay</Link>
               </li>
             </ul>
           </div>
 
-          {/* --- Column 4: Treatments (Placeholder) --- */}
+          {/* --- Column 4: Our Rooms --- */}
           <div className={styles.linkColumn}>
-            <h3 className={styles.heading}>Our Treatments</h3>
+            <h3 className={styles.heading}>Our Rooms</h3>
             <ul className={styles.list}>
               <li>
-                <Link to="/treatments/skin">Skin Care</Link>
+                <Link to="/rooms">Queen Room</Link>
               </li>
               <li>
-                <Link to="/treatments/hair">Hair Treatments</Link>
+                <Link to="/rooms">King Suite</Link>
               </li>
               <li>
-                <Link to="/treatments/laser">Laser Therapy</Link>
+                <Link to="/rooms">Family Room</Link>
               </li>
               <li>
-                <Link to="/treatments/body">Body Contouring</Link>
-              </li>
-              <li>
-                <Link to="/treatments/anti-aging">Anti-Aging</Link>
+                <Link to="/rooms">Deluxe Studio</Link>
               </li>
             </ul>
           </div>
 
-          {/* --- Column 5: Contact Us --- */}
+          {/* --- Column 5: Contact Us (Australian Details) --- */}
           <div className={styles.contactColumn}>
             <h3 className={styles.heading}>Contact Us</h3>
             <div className={styles.contactItem}>
               <MapPin className={styles.icon} size={20} />
-              <span>Hyderabad | Bengaluru | Vijayawada</span>
+              <span>
+                489 Pacific Hwy
+                <br />
+                Tweed Heads South, NSW 2486
+              </span>
             </div>
             <div className={styles.contactItem}>
               <Phone className={styles.icon} size={20} />
-              <a href="tel:+918686818384">+91 86868 18384</a>
+              <a href="tel:+61755243333">+61 7 5524 3333</a>
             </div>
             <div className={styles.contactItem}>
               <Mail className={styles.icon} size={20} />
-              <a href="mailto:info@arabella.com">info@arabella.com</a>
+              <a href="mailto:reservations@arabellamotorinn.com.au">
+                reservations@arabella.com.au
+              </a>
             </div>
           </div>
         </div>
 
         <div className={styles.copyright}>
           <p>
-            © 2025 Arabella. All rights reserved. Designed & Developed By
-            Panacea IT Services
+            © {new Date().getFullYear()} Arabella Motor Inn. All rights
+            reserved.
           </p>
         </div>
       </div>

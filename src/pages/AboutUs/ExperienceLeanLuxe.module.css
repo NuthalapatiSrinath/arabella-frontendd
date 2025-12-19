@@ -1,0 +1,157 @@
+/* ExperienceLeanLuxe.module.css */
+
+.luxeSection {
+  background-color: #ffffff;
+  padding: 80px 0;
+  font-family: var(--Font_Family, sans-serif);
+  overflow: hidden;
+}
+
+.container {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative; /* For positioning nav buttons */
+}
+
+/* --- Header Typography --- */
+.scriptTitle {
+  font-family: "Brush Script MT", "Dancing Script", cursive; /* Cursive fallback */
+  font-size: 4rem;
+  text-align: center;
+  color: #222;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.description {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto 30px auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* --- Navigation Buttons (Top Right) --- */
+.navRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-right: 10px;
+}
+
+.navBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ff6b35; /* Orange Border */
+  background: transparent;
+  color: #ff6b35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.navBtn:hover {
+  background: #ff6b35;
+  color: white;
+}
+
+/* --- Slider Layout --- */
+.sliderWindow {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+
+.sliderTrack {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  width: 100%; /* Will need adjustment if many items, but flexible flexbox helps */
+}
+
+.slideCard {
+  min-width: 50%; /* Shows 2 items per row */
+  padding: 0 15px; /* Gaps between cards */
+  box-sizing: border-box;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 350px;
+  border-radius: 20px; /* Rounded corners as per image */
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.imageContainer:hover .slideImage {
+  transform: scale(1.05);
+}
+
+.textContent {
+  padding-left: 5px;
+}
+
+.slideTitle {
+  font-size: 1.25rem;
+  color: #222;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.slideDesc {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* --- Dots Pagination --- */
+.dotsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.activeDot {
+  background-color: #ffb300; /* Yellow/Gold active state */
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .scriptTitle {
+    font-size: 3rem;
+  }
+
+  .slideCard {
+    min-width: 100%; /* 1 item per row on mobile */
+  }
+
+  .sliderTrack {
+    /* Adjust translate logic for mobile if needed, or keeping it simple: */
+  }
+
+  /* Update inline style logic for mobile in component if strictly needed, 
+     but 50% width works if we change state logic or just css media queries.
+     For strict simple responsive, we usually change itemsPerPage via JS window width */
+}

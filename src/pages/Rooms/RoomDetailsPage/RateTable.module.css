@@ -1,0 +1,149 @@
+.container {
+  margin: 40px 0;
+  font-family: "Inter", sans-serif;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.dateSub {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* Header (Black Bar) */
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr;
+  background-color: #333;
+  color: white;
+  padding: 15px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 4px 4px 0 0;
+}
+
+/* Row */
+.rateRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-top: none;
+  padding: 20px;
+  align-items: center;
+}
+
+/* Columns */
+.colName {
+  padding-right: 15px;
+}
+
+.rateName {
+  font-weight: 700;
+  color: #a39076; /* Gold Title */
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.includes {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.discount {
+  color: #eab308; /* Yellow/Gold */
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.colTerms {
+  display: flex;
+  flex-direction: column;
+}
+
+.termsText {
+  color: #a39076;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.conditionsLink {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 4px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Price Section */
+.colPrice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.priceGroup {
+  text-align: right;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: #aaa;
+  font-size: 0.85rem;
+  display: block;
+}
+
+.currPrice {
+  color: #a39076;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+}
+
+.priceNote {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.bookBtn {
+  background-color: #9c8c74; /* Muted Gold */
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  transition: background 0.3s;
+}
+
+.bookBtn:hover {
+  background-color: #8c7b63;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tableHeader {
+    display: none;
+  }
+  .rateRow {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .colPrice {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

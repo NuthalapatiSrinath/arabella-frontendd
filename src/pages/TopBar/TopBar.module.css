@@ -1,105 +1,40 @@
-/* Container Logic */
-.container {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
+/* TopBar.module.css */
 
-/* --- 1. TOP STRIP STYLES --- */
-.topStrip {
-  background-color: var(--Black_Color);
-  color: #e2e8f0;
-  font-size: var(--Font_Size_1);
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 1100;
-}
-
-.stripContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.locationPill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.rightStripGroup {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.emailGroup {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.contactLink {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #e2e8f0;
-  text-decoration: none;
-  transition: color 0.2s;
-  font-family: var(--Font_Family);
-}
-
-.contactLink:hover {
-  color: var(--Primary_Color);
-}
-
-.bookNowBtnSmall {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--Primary_Color);
-  border: 1px solid var(--Primary_Color);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--Font_Family);
-}
-
-.bookNowBtnSmall:hover {
-  background-color: white;
-  color: var(--Primary_Color);
-  border-color: white;
-}
-
-/* --- 2. MAIN NAVIGATION STYLES (Sticky) --- */
+/* --- 1. MAIN NAVIGATION CONTAINER (Layout Only) --- */
 .mainNav {
-  background: var(--Background_Color);
-  padding: 16px 0;
-  border: 0;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1100;
-  transition: box-shadow 0.3s ease, background 0.3s ease, padding 0.3s ease;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: all 0.4s ease-in-out;
+  border-bottom: none;
+  font-family: "Inter", sans-serif;
 }
 
-/* Sticky Shadow */
-.stickyShadow {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 12px 0;
+/* STATE 1: Transparent (Only for Home Page Top) */
+.transparent {
+  /* The gradient you liked */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    transparent 100%
+  );
+  box-shadow: none;
+}
+
+/* STATE 2: Solid Black (For Scroll OR Other Pages) */
+.solid {
+  background: #000000;
+  padding: 15px 0; /* Shrink slightly on scroll */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .navContent {
@@ -108,143 +43,247 @@
   justify-content: space-between;
 }
 
-/* Logo Group - Removed Gap */
+/* --- 2. LOGO --- */
 .logoGroup {
-  display: flex;
-  align-items: center;
-  /* gap: 12px;  <-- REMOVED gap */
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logoImage {
-  height: 58px; /* Adjust this height if your logo image looks too small or too big */
-  width: auto;
-  object-fit: contain;
+.logoText {
+  font-family: "Cinzel", "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-/* .brandName removed entirely */
+.logoSub {
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
+  color: #c5a059; /* Gold */
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
 
+/* --- 3. LINKS --- */
 .navLinks {
   display: flex;
-  gap: 32px;
+  gap: 35px;
 }
 
 .navLinks a {
   text-decoration: none;
-  color: var(--Grey_Color);
-  font-weight: 500;
-  font-size: 16px;
-  transition: color 0.2s;
-  font-family: var(--Font_Family);
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color 0.3s ease;
 }
 
 .navLinks a:hover {
-  color: var(--Primary_Color);
+  color: #c5a059;
 }
 
 .linkActive {
-  color: var(--Primary_Color) !important;
-  font-weight: 700 !important;
+  color: #c5a059 !important;
 }
 
+/* --- 4. ACTIONS --- */
 .actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 25px;
 }
 
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.loginBtn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.loginBtn:hover {
+  color: #c5a059;
+}
+
+.bookBtn {
+  background-color: #c5a059;
+  color: #000000;
+  border: none;
+  padding: 12px 24px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.bookBtn:hover {
+  background-color: #e0b86e;
+  transform: translateY(-1px);
+}
+
+/* --- 5. USER PROFILE --- */
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.logoutBtn:hover {
+  color: #ef4444;
+}
+
+/* --- 6. MOBILE --- */
 .mobileMenuBtn {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--Black_Color);
+  color: white;
 }
 
-/* --- 3. MOBILE MENU STYLES --- */
 .mobileMenuContainer {
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: var(--White_Color);
-  border-bottom: none;
-  box-shadow: none;
-
-  /* Default closed state */
+  background-color: #000000;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
-  z-index: 999;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* OPEN STATE */
 .menuOpen {
-  max-height: 500px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  max-height: 100vh;
+  padding-bottom: 20px;
 }
 
 .mobileLinks {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  gap: 16px;
+  padding: 20px 30px;
 }
 
 .mobileLinks a {
   text-decoration: none;
-  color: var(--Black_Color);
-  font-size: 16px;
+  color: #ffffff;
+  font-size: 0.9rem;
   font-weight: 500;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  font-family: var(--Font_Family);
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.mobileLinks a:hover {
+  color: #c5a059;
+}
+
+.mobileAuthRow {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.mobileAuthBtn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 12px 0;
+  text-align: center;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.mobileAuthBtn:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .mobileBtnWrapper {
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 0;
 }
 
 .contactBtnMobile {
   display: block;
   width: 100%;
-  background-color: var(--Primary_Color);
-  color: white;
-  padding: 12px;
+  background-color: #c5a059;
+  color: #000000;
+  padding: 14px 0;
   text-align: center;
-  border-radius: 8px;
-  font-weight: 700;
   border: none;
+  border-radius: 0;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-/* --- RESPONSIVE --- */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-  .navLinks {
+  .navLinks,
+  .authButtons {
     display: none;
   }
-
   .mobileMenuBtn {
     display: block;
   }
-
-  /* Adjust strip for tablet/mobile */
-  .stripContent {
-    display: flex;
+  .container {
+    padding: 0 20px;
   }
-
-  .locationPill {
+  /* Hide desktop book button on mobile */
+  .bookBtn {
     display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .topStrip {
-    display: none;
-  }
-
-  .logoImage {
-    height: 40px;
   }
 }

@@ -1,0 +1,327 @@
+/* CareFeedback.module.css */
+
+/* --- Main Section Layout --- */
+.careSection {
+  background-color: #fcf8f5; /* Light blush/beige background matching the image */
+  padding: 80px 0;
+  font-family: var(
+    --Font_Family,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+  position: relative;
+  overflow: hidden; /* Prevents overflow from animations */
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Header Section --- */
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.careTitle {
+  font-family: "Anton", sans-serif; /* Condensed bold font */
+  font-size: 3.5rem;
+  color: #5e35b1; /* Deep Purple branding */
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.careDesc {
+  color: #555;
+  font-size: 1rem;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* --- Form Container & Tabs --- */
+.formContainer {
+  background: transparent; /* Seamless blend */
+  width: 100%;
+}
+
+.tabsRow {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle divider line */
+  padding-bottom: 10px;
+}
+
+.tabBtn {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #aaa; /* Inactive grey */
+  cursor: pointer;
+  padding-bottom: 10px; /* Space for the border line */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  top: 11px; /* Aligns border with the container line */
+}
+
+.tabBtn:hover {
+  color: #5e35b1;
+}
+
+.activeTab {
+  color: #5e35b1;
+  border-bottom-color: #5e35b1;
+}
+
+/* --- Form Grid --- */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  column-gap: 30px;
+  row-gap: 25px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Utility to span full width */
+.fullWidth {
+  grid-column: span 2;
+}
+
+.inputGroup label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input Fields Styling */
+.input,
+.textarea,
+.countrySelect,
+.phoneInput {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder,
+.phoneInput::placeholder {
+  color: #bbb;
+}
+
+/* Focus States */
+.input:focus,
+.textarea:focus,
+.countrySelect:focus,
+.phoneInput:focus {
+  border-color: #5e35b1;
+  box-shadow: 0 0 0 3px rgba(94, 53, 177, 0.1);
+}
+
+/* Textarea specific */
+.textarea {
+  min-height: 120px;
+  resize: vertical; /* Allow vertical resizing only */
+  font-family: inherit;
+}
+
+/* Phone Input Complex */
+.phoneInputWrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.countrySelect {
+  width: 110px; /* Fixed width for country code */
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 8px auto;
+  appearance: none; /* Remove default arrow */
+  padding-right: 25px;
+}
+
+.phoneInput {
+  flex: 1; /* Takes remaining space */
+}
+
+/* --- Checkbox & Consent --- */
+.checkboxRow {
+  display: flex;
+  align-items: center; /* Aligns checkbox with text vertically */
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #5e35b1; /* Colors the tick box purple */
+  cursor: pointer;
+}
+
+.checkboxRow label {
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxRow a {
+  color: #5e35b1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.checkboxRow a:hover {
+  text-decoration: underline;
+}
+
+/* --- Submit Button --- */
+.submitRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.submitBtn {
+  background-color: #ffffff;
+  color: #5e35b1;
+  border: 1px solid #5e35b1;
+  padding: 14px 60px;
+  border-radius: 50px; /* Pill shape */
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(94, 53, 177, 0.1);
+}
+
+.submitBtn:hover {
+  background-color: #5e35b1;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(94, 53, 177, 0.2);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
+}
+
+/* --- Floating Chat Icon --- */
+.chatIcon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background-color: #5e35b1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(94, 53, 177, 0.4);
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chatIcon:hover {
+  transform: scale(1.1);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+/* Tablet (Portrait) and Mobile */
+@media (max-width: 768px) {
+  .careSection {
+    padding: 50px 0;
+  }
+
+  .careTitle {
+    font-size: 2.5rem;
+  }
+
+  /* Stack form elements vertically */
+  .formGrid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 20px;
+  }
+
+  /* Force "fullWidth" items to just be 1 column wide (which is 100% now) */
+  .fullWidth {
+    grid-column: span 1;
+  }
+
+  .tabsRow {
+    gap: 20px;
+  }
+
+  .tabBtn {
+    font-size: 0.85rem;
+  }
+
+  /* Stack checkbox text if it gets too long */
+  .checkboxRow {
+    align-items: flex-start;
+  }
+
+  .checkbox {
+    margin-top: 3px; /* Align with top line of text */
+  }
+
+  .submitBtn {
+    width: 100%; /* Full width button on mobile */
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .careTitle {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .chatIcon {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+  }
+}

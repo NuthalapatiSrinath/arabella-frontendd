@@ -1,0 +1,119 @@
+/* RoomsPage.module.css */
+
+.pageContainer {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  /* Remove top padding so Hero hits the top edge */
+  padding: 0 0 60px 0;
+  font-family: var(--Font_Family, sans-serif);
+}
+
+/* --- HERO SECTION STYLES --- */
+.heroSection {
+  height: 60vh;
+  /* High quality bedroom/interior image */
+  background-image: url("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-bottom: 60px; /* Space between hero and content */
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.heroOverlay h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 4rem;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.heroOverlay p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  max-width: 600px;
+}
+
+/* --- CONTENT WRAPPER (Grid Layout) --- */
+.contentWrapper {
+  display: grid;
+  grid-template-columns: 350px 1fr; /* Sidebar fixed width, Rooms take rest */
+  gap: 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Sidebar --- */
+.sidebarColumn {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+/* --- Rooms Column --- */
+.roomsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.roomsHeader {
+  margin-bottom: 10px;
+}
+
+.roomsHeader h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.roomsHeader p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.roomsList {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .contentWrapper {
+    grid-template-columns: 1fr; /* Stack sidebar and rooms */
+  }
+
+  .sidebarColumn {
+    position: static; /* Remove sticky on mobile */
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    height: 50vh;
+  }
+
+  .heroOverlay h1 {
+    font-size: 2.5rem;
+  }
+}

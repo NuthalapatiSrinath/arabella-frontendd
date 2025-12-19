@@ -1,0 +1,138 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 450px; /* Fixed height for consistent look */
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #000; /* Fallback color */
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* --- IMAGE LAYER --- */
+.imageSection {
+  width: 100%;
+  height: 100%;
+}
+
+.imageSection img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.9; /* Slight dim to make text pop */
+}
+
+/* --- CONTENT OVERLAY (The Dark Box) --- */
+.contentSection {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    transparent 100%
+  );
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.textContainer {
+  max-width: 65%;
+}
+
+.title {
+  font-family: "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.priceInfo {
+  color: #facc15; /* Gold */
+  font-size: 1rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.desc {
+  font-size: 0.95rem;
+  color: #ddd;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit description lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.iconsRow {
+  display: flex;
+  gap: 20px;
+  font-size: 0.9rem;
+  color: #eee;
+}
+
+.iconsRow span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- BUTTONS (Bottom Right) --- */
+.btnRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.outlineBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.outlineBtn:hover {
+  background: white;
+  color: black;
+}
+
+.chooseBtn {
+  background: #a39076; /* Gold */
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chooseBtn:hover {
+  background: #8c7b63;
+}
