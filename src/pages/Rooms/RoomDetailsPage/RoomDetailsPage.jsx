@@ -1,12 +1,12 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import {} from "react-router-dom";
 import { Bed, Maximize, User } from "lucide-react";
 import BookingSidebar from "../../Rooms/BookingSidebar";
 import RateTable from "./RateTable"; // ✅ Import the new RateTable
 import styles from "./RoomDetailsPage.module.css";
 
 const RoomDetailsPage = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
 
   // Mock Data
   const roomData = {

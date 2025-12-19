@@ -37,16 +37,17 @@ const RoomCard = ({ room, isSearched, searchData }) => {
           </div>
 
           <div className={styles.btnRow}>
-            {/* Change <button> to <Link> */}
+            {/* MORE INFO Link */}
             <Link to={`/rooms/${room.id}`} className={styles.outlineBtn}>
               MORE INFO
             </Link>
 
             {/* CONDITIONAL: Show CHOOSE button if searched */}
             {isSearched && (
-              <button className={styles.chooseBtn}>
+              /* Changed <button> to <Link> and added the 'to' prop */
+              <Link to={`/rooms/${room.id}`} className={styles.chooseBtn}>
                 CHOOSE <ChevronDown size={14} />
-              </button>
+              </Link>
             )}
           </div>
         </div>

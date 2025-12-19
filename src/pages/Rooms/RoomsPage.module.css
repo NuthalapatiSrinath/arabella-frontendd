@@ -3,20 +3,22 @@
 .pageContainer {
   background-color: #f9f9f9;
   min-height: 100vh;
-  /* Remove top padding so Hero hits the top edge */
   padding: 0 0 60px 0;
-  font-family: var(--Font_Family, sans-serif);
+  font-family: var(--Font_Family, "Helvetica", "Arial", sans-serif);
 }
 
 /* --- HERO SECTION STYLES --- */
 .heroSection {
+  /* Default Desktop Height */
   height: 60vh;
+  min-height: 400px; /* Prevents it from getting too short on wide/short screens */
+
   /* High quality bedroom/interior image */
   background-image: url("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80");
   background-size: cover;
   background-position: center;
   position: relative;
-  margin-bottom: 60px; /* Space between hero and content */
+  margin-bottom: 60px;
 }
 
 .heroOverlay {
@@ -36,11 +38,14 @@
 }
 
 .heroOverlay h1 {
-  font-family: "Times New Roman", serif;
+  font-family: "Times New Roman", Times, serif; /* Explicit fallback */
   font-size: 4rem;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   margin-bottom: 15px;
   text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for readability */
 }
 
 .heroOverlay p {
@@ -48,12 +53,14 @@
   font-weight: 300;
   letter-spacing: 1px;
   max-width: 600px;
+  line-height: 1.6;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* --- CONTENT WRAPPER (Grid Layout) --- */
 .contentWrapper {
   display: grid;
-  grid-template-columns: 350px 1fr; /* Sidebar fixed width, Rooms take rest */
+  grid-template-columns: 320px 1fr; /* Sidebar fixed width, Rooms take rest */
   gap: 40px;
   max-width: 1280px;
   margin: 0 auto;
@@ -63,7 +70,7 @@
 /* --- Sidebar --- */
 .sidebarColumn {
   position: sticky;
-  top: 20px;
+  top: 100px; /* Stick with some breathing room from top */
   height: fit-content;
 }
 
@@ -72,6 +79,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  min-width: 0; /* Prevents flex items from overflowing grid */
 }
 
 .roomsHeader {
@@ -79,7 +87,7 @@
 }
 
 .roomsHeader h1 {
-  font-family: "Times New Roman", serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 2rem;
   color: #333;
   margin-bottom: 10px;
@@ -88,6 +96,7 @@
 .roomsHeader p {
   color: #666;
   font-size: 1rem;
+  line-height: 1.5;
 }
 
 .roomsList {
@@ -96,24 +105,71 @@
   gap: 30px;
 }
 
-/* --- Responsive --- */
+/* =========================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
-  .contentWrapper {
-    grid-template-columns: 1fr; /* Stack sidebar and rooms */
-  }
-
-  .sidebarColumn {
-    position: static; /* Remove sticky on mobile */
-    margin-bottom: 30px;
-  }
-}
-
-@media (max-width: 768px) {
   .heroSection {
-    height: 50vh;
+    height: 50vh; /* Slightly shorter on tablet */
+    min-height: 350px;
   }
 
   .heroOverlay h1 {
-    font-size: 2.5rem;
+    font-size: 3rem; /* Scale down title */
+  }
+
+  .contentWrapper {
+    grid-template-columns: 1fr; /* Stack sidebar and rooms */
+    gap: 30px;
+  }
+
+  .sidebarColumn {
+    position: static; /* Remove sticky on mobile/tablet stack */
+    margin-bottom: 10px;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .heroSection {
+    height: 45vh;
+    min-height: 300px;
+    margin-bottom: 40px;
+  }
+
+  .heroOverlay {
+    padding: 0 15px; /* Ensure text doesn't touch edges */
+  }
+
+  .heroOverlay h1 {
+    font-size: 2.2rem; /* Mobile friendly size */
+    letter-spacing: 2px;
+  }
+
+  .heroOverlay p {
+    font-size: 1rem;
+    max-width: 90%; /* Prevent text from being too wide on small screens */
+  }
+
+  .contentWrapper {
+    padding: 0 16px; /* Reduce side padding on mobile */
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .heroSection {
+    height: 40vh; /* Compact height for phones */
+  }
+
+  .heroOverlay h1 {
+    font-size: 1.75rem; /* Ensure 'ACCOMMODATION' fits on one line if possible */
+    letter-spacing: 1px;
+  }
+
+  .roomsHeader h1 {
+    font-size: 1.75rem;
   }
 }

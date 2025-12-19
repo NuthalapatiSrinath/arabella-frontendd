@@ -1,12 +1,12 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CheckCircle, Home, Calendar } from "lucide-react";
+import { CheckCircle, Home } from "lucide-react";
 import styles from "./PaymentSuccess.module.css";
 
 const PaymentSuccess = () => {
   // We can pass state from the booking modal if needed
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <div className={styles.container}>

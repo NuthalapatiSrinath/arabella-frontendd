@@ -171,63 +171,439 @@
   font-size: 0.95rem;
   line-height: 1.6;
 }
-
-/* --- ROOM SHOWCASE --- */
+/* --- Main Container --- */
 .roomShowcase {
-  padding: 100px 0;
-  background: white;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 80px 0 80px 5%; /* Left padding creates the "offset" look */
+  background-color: var(--White_Color);
+  gap: 60px;
+  overflow: hidden; /* Prevents horizontal scroll on the main page */
 }
 
-/* --- PARALLAX / STATS --- */
-.parallaxSection {
-  background: linear-gradient(to right, #0f172a, #1e3a8a);
-  height: 450px;
+/* --- Left Text Column --- */
+.leftTextCol {
+  flex: 0 0 300px; /* Fixed width for the text intro */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 2;
+}
+
+.bigHeadline {
+  font-family: var(--Font_Family);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #999;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.bigHeadline span {
+  display: block;
+  font-family: var(--Font_Brand);
+  font-size: 48px;
+  color: var(--Black_Color);
+  text-transform: none;
+  margin-top: 10px;
+  line-height: 1;
+}
+
+.leftDesc {
+  font-family: var(--Font_Family);
+  font-size: 15px;
+  color: #666; /* Gray Text */
+  line-height: 1.6;
+}
+
+.readMoreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--Primary_Color);
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  transition: opacity 0.3s;
+}
+
+.readMoreLink:hover {
+  opacity: 0.7;
+}
+
+/* --- Slider Container --- */
+.sliderContainer {
+  flex: 1; /* Takes remaining width */
+  position: relative;
+  min-width: 0; /* Critical flexbox fix for sliders */
+}
+
+/* --- Navigation Buttons (Desktop) --- */
+.navBtn {
+  position: absolute;
+  top: -60px; /* Place them above the slider */
+  right: 5%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  color: var(--Black_Color);
+}
+
+.prevBtn {
+  right: 80px;
+} /* Position relative to next button */
+.nextBtn {
+  right: 20px;
+}
+
+.navBtn:hover {
+  background-color: var(--Black_Color);
+  color: var(--White_Color);
+  border-color: var(--Black_Color);
+}
+
+/* --- The Scroll Strip --- */
+.cardStrip {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 20px; /* Space for shadow */
+  padding-right: 50px; /* Space at the end */
+
+  /* Hide Scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+.cardStrip::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* --- Hotel Card --- */
+.hotelCard {
+  flex: 0 0 380px; /* Fixed width on Desktop */
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hotelCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+.cardImage {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.cardContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardLocation {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 600;
+}
+
+.cardTitle {
+  font-family: var(--Font_Brand);
+  font-size: 22px;
+  color: var(--Black_Color);
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+
+  /* Truncate text after 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Amenities Grid --- */
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  margin-bottom: 15px;
+}
+
+.amenityItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* --- Card Footer --- */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.knowMore {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--Black_Color);
+}
+
+.bookBtn {
+  background-color: var(--Black_Color);
+  color: var(--White_Color);
+  border: none;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.bookBtn:hover {
+  background-color: var(--Primary_Color);
+}
+
+/* =========================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Tablet & Mobile (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .roomShowcase {
+    flex-direction: column; /* Stack Top to Bottom */
+    align-items: flex-start;
+    padding: 60px 0;
+    gap: 40px;
+  }
+
+  .leftTextCol {
+    flex: auto;
+    width: 100%;
+    padding: 0 24px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .bigHeadline span {
+    font-size: 36px;
+  }
+
+  /* 1. RESET Slider Container Padding */
+  .sliderContainer {
+    width: 100%;
+    padding: 0; /* Remove padding here, we add it to the strip */
+  }
+
+  /* Hide custom nav buttons on mobile */
+  .navBtn {
+    display: none;
+  }
+
+  /* 2. ADJUST the Scroll Strip */
+  .cardStrip {
+    display: flex;
+    gap: 15px; /* Smaller gap between cards */
+    overflow-x: auto;
+
+    /* Enable Snap Scrolling */
+    scroll-snap-type: x mandatory;
+
+    /* Add padding to the STRIP itself so the first card sits nicely */
+    padding: 0 24px 20px 24px;
+
+    /* IMPORTANT: Tells the browser where to 'start' snapping */
+    scroll-padding-left: 24px;
+  }
+
+  /* 3. FIX the Hotel Card Sizing & Alignment */
+  .hotelCard {
+    /* Calculate width: Screen Width - (Left Padding + Right Padding) */
+    /* This ensures 1 card fits PERFECTLY without being cut off */
+    flex: 0 0 calc(100vw - 48px);
+
+    /* Snap to the LEFT (Start) instead of Center */
+    scroll-snap-align: start;
+
+    margin-right: 0; /* Gap is handled by .cardStrip gap */
+  }
+
+  .cardImage {
+    height: 200px;
+  }
+}
+/* --- Parallax Section (Desktop/Tablet default) --- */
+.parallaxSection {
+  /* Dark overlay + Image */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1920&auto=format&fit=crop");
+
+  /* The Parallax Effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  padding: 100px 0;
+  color: var(--White_Color);
+  text-align: center;
   position: relative;
-  margin: 50px 0;
+  overflow: hidden;
 }
 
 .parallaxContent {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: white;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
 }
 
 .parallaxContent h2 {
-  font-size: 3.5rem;
-  margin-bottom: 60px;
-  font-weight: 800;
+  font-family: var(--Font_Brand); /* Serif */
+  font-size: 42px;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 1px;
 }
 
+.parallaxContent h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background-color: var(--Primary_Color);
+  margin: 20px auto 0 auto;
+}
+
+/* --- Stats Row --- */
 .statsRow {
   display: flex;
-  gap: 100px;
   justify-content: center;
+  align-items: center;
+  gap: 100px;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 8px;
+  min-width: 140px;
 }
 
 .number {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #facc15;
+  font-family: var(--Font_Brand); /* Serif */
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--Primary_Color);
   line-height: 1;
-  margin-bottom: 10px;
 }
 
 .label {
-  font-size: 1rem;
+  font-family: var(--Font_Family); /* Sans Serif */
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .parallaxSection {
+    padding: 80px 0;
+  }
+
+  .statsRow {
+    gap: 50px;
+  }
+
+  .parallaxContent h2 {
+    font-size: 36px;
+  }
+
+  .number {
+    font-size: 48px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .parallaxSection {
+    padding: 60px 0;
+
+    /* CHANGE: Remove image URL, show only a dark gradient */
+    background-image: linear-gradient(
+      135deg,
+      var(--Black_Color) 0%,
+      #2a2a2a 100%
+    );
+
+    /* Reset background props so they don't conflict */
+    background-attachment: scroll;
+    background-position: initial;
+    background-size: auto;
+  }
+
+  .parallaxContent {
+    gap: 40px;
+  }
+
+  .statsRow {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .parallaxContent h2 {
+    font-size: 28px;
+  }
+
+  .number {
+    font-size: 42px;
+  }
 }
 
 /* --- TESTIMONIALS --- */

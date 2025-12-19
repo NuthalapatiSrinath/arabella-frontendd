@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../redux/slices/modalSlice";
 import { setCredentials } from "../../redux/slices/authSlice";
-import { loginUser, registerUser } from "../../services/authService";
+import { loginUser } from "../../services/authService";
 import { X, Mail, Lock, User, ArrowRight } from "lucide-react";
 import styles from "./AuthModal.module.css";
 
@@ -39,12 +39,12 @@ const AuthModal = ({ initialMode = "login" }) => {
         dispatch(closeModal());
       } else {
         // --- REGISTER LOGIC ---
-        const res = await registerUser({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          role: "user",
-        });
+        // const res = await registerUser({
+        //   name: formData.name,
+        //   email: formData.email,
+        //   password: formData.password,
+        //   role: "user",
+        // });
 
         // Auto login after register? Or just show success?
         // Let's switch to login mode or auto-login if backend sends token

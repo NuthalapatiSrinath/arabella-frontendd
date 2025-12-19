@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion"; // Import Animation Library
 import BookingSidebar from "./BookingSidebar";

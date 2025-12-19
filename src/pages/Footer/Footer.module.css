@@ -1,7 +1,16 @@
+/* --- Global Variables (Ensure these exist in your global css or root) --- */
+:root {
+  --Black_Color: #111111;
+  --White_Color: #ffffff;
+  --Primary_Color: #c5a365;
+  --Font_Family: "Helvetica", "Arial", sans-serif;
+  --Font_Brand: "Times New Roman", Times, serif;
+}
+
 .footer {
   background-color: var(--Black_Color);
   color: var(--White_Color);
-  padding: 40px 0 30px 0;
+  padding: 60px 0 30px 0; /* Increased top padding slightly for breathability */
   font-family: var(--Font_Family);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -12,6 +21,8 @@
   padding: 0 24px;
 }
 
+/* --- The Grid Layout --- */
+/* Desktop: 5 Columns */
 .grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1.3fr;
@@ -27,35 +38,37 @@
   padding-right: 20px;
 }
 
-/* Logo Text Styling to match TopBar Logo */
 .logoRow {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between Arabella and Motor Inn */
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .brandName {
-  font-family: var(--Font_Brand); /* Use the Serif font like TopBar */
+  font-family: var(--Font_Brand);
   font-size: 32px;
   color: var(--White_Color);
+  font-weight: 500;
   letter-spacing: 2px;
-  text-transform: uppercase;
   line-height: 1;
-  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .brandSub {
-  font-family: var(--Font_Family); /* Sans-Serif like 'MOTOR INN' in logo */
+  font-family: var(--Font_Family);
   font-size: 11px;
-  color: var(--Primary_Color); /* Gold color */
-  letter-spacing: 4px; /* Wide spacing */
+  color: var(--Primary_Color);
+  letter-spacing: 7px;
   text-transform: uppercase;
-  font-weight: 700;
-  margin-left: 2px;
+  font-weight: 600;
+  margin-left: 3px;
+  display: block;
 }
 
 .tagline {
-  color: #a0a0a0; /* Softer grey */
+  color: #a0a0a0;
   font-size: 14px;
   line-height: 1.8;
   max-width: 85%;
@@ -72,7 +85,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* Circle */
+  border-radius: 50%;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--White_Color);
@@ -92,20 +105,20 @@
   gap: 24px;
 }
 
-/* HEADINGS: Matched to TopBar Navigation Style */
 .heading {
-  font-family: var(--Font_Family); /* Sans-Serif */
+  font-family: var(--Font_Family);
   font-size: 13px;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   color: var(--White_Color);
-  text-transform: uppercase; /* Uppercase */
-  letter-spacing: 2px; /* Wide Spacing like Top Nav */
-  margin-top: 5px; /* Alignment fix */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
 }
 
 .list {
   list-style: none;
   padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -173,76 +186,87 @@
   font-size: 12px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  margin: 0;
 }
 
-/* --- Responsive --- */
+/* =========================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Tablet (1024px) */
 @media (max-width: 1024px) {
   .grid {
+    /* Change to 3 columns */
     grid-template-columns: repeat(3, 1fr);
     row-gap: 50px;
   }
+
+  /* 1. Brand takes full top row */
   .brandColumn {
     grid-column: span 3;
     align-items: center;
     text-align: center;
     padding-right: 0;
   }
+
   .logoRow {
     align-items: center;
   }
+
   .tagline {
     max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .socialRow {
+    justify-content: center;
+  }
+
+  /* 2. Contact takes full bottom row (to balance the 3 links in the middle) */
+  .contactColumn {
+    grid-column: span 3;
+    align-items: center; /* Center content */
+  }
+
+  /* Fix contact items alignment for centered layout */
+  .contactItem {
+    justify-content: center;
   }
 }
 
+/* Mobile (768px) */
 @media (max-width: 768px) {
+  .footer {
+    padding: 40px 0;
+  }
+
   .grid {
+    /* Stack everything in 1 column */
     grid-template-columns: 1fr;
     gap: 40px;
     text-align: center;
   }
-  .contactItem {
-    justify-content: center;
-    text-align: center;
+
+  /* Reset grid spans */
+  .brandColumn,
+  .contactColumn {
+    grid-column: auto;
   }
+
+  /* Center Align Link Columns */
+  .linkColumn {
+    align-items: center;
+  }
+
+  /* Remove hover shift on mobile touch screens */
   .list a:hover {
     transform: none;
     color: var(--Primary_Color);
   }
-}
-/* --- Brand Column Typography --- */
 
-.logoRow {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  margin-bottom: 10px;
-}
-
-.brandName {
-  /* Use a standard elegant Serif stack to match the image */
-  font-family: "Times New Roman", Times, serif;
-  /* If you have 'Playfair Display' imported, use: font-family: 'Playfair Display', serif; */
-
-  font-size: 32px;
-  color: var(--White_Color);
-  font-weight: 500; /* Regular weight is key for that sharp look */
-  letter-spacing: 2px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.brandSub {
-  /* Clean Sans-Serif for the bottom text */
-  font-family: Helvetica, Arial, sans-serif;
-
-  font-size: 11px;
-  color: #c5a365; /* Gold */
-  letter-spacing: 7px; /* Extremely wide spacing matches the image */
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-left: 3px;
-  display: block;
+  /* Stack contact items cleanly if needed, or keep centered */
+  .contactItem {
+    justify-content: center;
+    text-align: center;
+  }
 }
