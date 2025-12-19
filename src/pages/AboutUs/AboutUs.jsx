@@ -91,7 +91,7 @@ const AboutUs = () => {
         </div>
         <div className={styles.imgWrapper}>
           <img
-            src="https://images.unsplash.com/photo-1514362545857-3bc16549766b?auto=format&fit=crop&w=600&q=80"
+            src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=600&q=80"
             alt="Bar"
             className={styles.gridImage}
           />
@@ -112,7 +112,7 @@ const AboutUs = () => {
         </div>
         <div className={styles.imgWrapper}>
           <img
-            src="https://images.unsplash.com/photo-1572331165267-854da2b00ca1?auto=format&fit=crop&w=600&q=80"
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80"
             alt="Pool"
             className={styles.gridImage}
           />

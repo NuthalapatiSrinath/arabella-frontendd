@@ -1066,3 +1066,73 @@
   justify-content: center;
   gap: 4px;
 }
+/* HomePage.module.css */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.heroVideo {
+  position: absolute;
+  /* Pull the video up to cover any black bar or gap */
+  top: -85px;
+  left: 0;
+  width: 100%;
+  /* Increase height to compensate for the upward shift */
+  height: calc(100% + 50px);
+  object-fit: cover;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+/* ... rest of your CSS ... */
+/* HomePage.module.css */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  margin-top: 0;
+  overflow: hidden; /* Crucial: This clips the extra video part */
+}
+
+.heroVideo {
+  position: absolute;
+  /* Pull up slightly to ensure top coverage */
+  top: -13%;
+  left: 0;
+  width: 100%;
+  /* Make taller than the screen to cover top & bottom gaps */
+  height: 130%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+/* ... rest of your CSS ... */

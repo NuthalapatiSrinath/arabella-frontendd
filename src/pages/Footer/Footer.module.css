@@ -1,7 +1,7 @@
 .footer {
   background-color: var(--Black_Color);
   color: var(--White_Color);
-  padding: 80px 0 30px 0;
+  padding: 40px 0 30px 0;
   font-family: var(--Font_Family);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }

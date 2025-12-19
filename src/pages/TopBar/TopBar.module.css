@@ -1,6 +1,6 @@
 /* TopBar.module.css */
 
-/* --- 1. MAIN NAVIGATION CONTAINER (Layout Only) --- */
+/* --- 1. MAIN NAVIGATION CONTAINER --- */
 .mainNav {
   position: fixed;
   top: 0;
@@ -9,26 +9,22 @@
   z-index: 1000;
   padding: 20px 0;
   transition: all 0.4s ease-in-out;
-  border-bottom: none;
-  font-family: "Inter", sans-serif;
-}
 
-/* STATE 1: Transparent (Only for Home Page Top) */
-.transparent {
-  /* The gradient you liked */
+  /* Initial State: Transparent Gradient for readability over video */
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.8) 0%,
     transparent 100%
   );
-  box-shadow: none;
+  border-bottom: none;
 }
 
-/* STATE 2: Solid Black (For Scroll OR Other Pages) */
-.solid {
+/* SCROLLED STATE: Solid Black */
+.stickyShadow {
   background: #000000;
-  padding: 15px 0; /* Shrink slightly on scroll */
+  padding: 15px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-bottom: none;
 }
 
 .container {
@@ -43,7 +39,7 @@
   justify-content: space-between;
 }
 
-/* --- 2. LOGO --- */
+/* --- 2. LOGO (Text Based) --- */
 .logoGroup {
   text-decoration: none;
   display: flex;
@@ -70,7 +66,7 @@
   margin-top: 4px;
 }
 
-/* --- 3. LINKS --- */
+/* --- 3. NAVIGATION LINKS --- */
 .navLinks {
   display: flex;
   gap: 35px;
@@ -85,6 +81,7 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
   transition: color 0.3s ease;
+  position: relative;
 }
 
 .navLinks a:hover {
@@ -95,7 +92,7 @@
   color: #c5a059 !important;
 }
 
-/* --- 4. ACTIONS --- */
+/* --- 4. ACTIONS (Login & Signup) --- */
 .actions {
   display: flex;
   align-items: center;
@@ -108,6 +105,7 @@
   gap: 20px;
 }
 
+/* LOGIN BUTTON */
 .loginBtn {
   background: transparent;
   border: none;
@@ -125,7 +123,8 @@
   color: #c5a059;
 }
 
-.bookBtn {
+/* SIGN UP BUTTON */
+.signupBtn {
   background-color: #c5a059;
   color: #000000;
   border: none;
@@ -140,9 +139,32 @@
   transition: all 0.3s ease;
 }
 
+.signupBtn:hover {
+  background-color: #e0b86e;
+  transform: translateY(-1px);
+}
+
+/* BOOK NOW BUTTON */
+.bookBtn {
+  background-color: #c5a059;
+  color: #000000;
+  border: none;
+  padding: 12px 24px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin-left: 5px;
+}
+
 .bookBtn:hover {
   background-color: #e0b86e;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
 }
 
 /* --- 5. USER PROFILE --- */
@@ -173,7 +195,7 @@
   color: #ef4444;
 }
 
-/* --- 6. MOBILE --- */
+/* --- 6. MOBILE MENU --- */
 .mobileMenuBtn {
   display: none;
   background: none;
@@ -214,11 +236,13 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-family: "Inter", sans-serif;
   transition: color 0.3s;
 }
 
 .mobileLinks a:hover {
   color: #c5a059;
+  padding-left: 5px;
 }
 
 .mobileAuthRow {
@@ -270,7 +294,10 @@
   transition: background 0.3s;
 }
 
-/* RESPONSIVE */
+.contactBtnMobile:hover {
+  background-color: #e0b86e;
+}
+
 @media (max-width: 1024px) {
   .navLinks,
   .authButtons {
@@ -282,7 +309,6 @@
   .container {
     padding: 0 20px;
   }
-  /* Hide desktop book button on mobile */
   .bookBtn {
     display: none;
   }

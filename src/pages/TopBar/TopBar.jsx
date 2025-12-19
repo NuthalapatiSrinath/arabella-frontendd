@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../../redux/slices/modalSlice";
+// import { openModal } from "../../redux/slices/modalSlice"; // ❌ No longer needed for auth
 import { logout } from "../../redux/slices/authSlice";
 import { Menu, X, User, LogOut } from "lucide-react";
 import styles from "./TopBar.module.css";
@@ -9,13 +9,11 @@ import styles from "./TopBar.module.css";
 const TopBar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ Initialize hook
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // 1. Check if we are on the Home Page
-  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -26,42 +24,47 @@ const TopBar = () => {
   const handleLinkClick = () => setIsMenuOpen(false);
   const isActive = (path) => location.pathname === path;
 
-  // --- HANDLERS ---
-  const handleLoginClick = () =>
-    dispatch(openModal({ type: "authModal", modalData: { mode: "login" } }));
+  // --- NEW HANDLERS ---
 
-  const handleSignupClick = () =>
-    dispatch(openModal({ type: "authModal", modalData: { mode: "signup" } }));
+  const handleLoginClick = () => {
+    navigate("/login"); // ✅ Go to Login Page
+    setIsMenuOpen(false);
+  };
+
+  const handleSignupClick = () => {
+    navigate("/signup"); // ✅ Go to Signup Page
+    setIsMenuOpen(false);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
     setIsMenuOpen(false);
+    navigate("/");
   };
 
+  // ✅ UPDATED BOOK NOW LOGIC
   const handleBookNow = () => {
     if (isAuthenticated) {
-      dispatch(openModal({ type: "bookingModal" }));
+      navigate("/rooms"); // If logged in -> Go to Rooms
     } else {
-      dispatch(openModal({ type: "authModal", modalData: { mode: "login" } }));
+      navigate("/login"); // If not logged in -> Go to Login
     }
+    setIsMenuOpen(false);
   };
 
-  // 2. Logic: IF (Home Page AND Not Scrolled) -> Transparent; ELSE -> Solid Black
-  const navBackgroundClass =
-    isHomePage && !isScrolled ? styles.transparent : styles.solid;
-
   return (
-    // 3. Apply both Layout class and Dynamic Background class
-    <div className={`${styles.mainNav} ${navBackgroundClass}`}>
+    <div
+      className={`${styles.mainNav} ${isScrolled ? styles.stickyShadow : ""}`}
+    >
       <div className={styles.container}>
         <div className={styles.navContent}>
-          {/* 1. TEXT LOGO */}
+          {/* Logo */}
           <Link to="/" className={styles.logoGroup}>
             <span className={styles.logoText}>ARABELLA</span>
             <span className={styles.logoSub}>MOTOR INN</span>
           </Link>
 
-          {/* 2. NAVIGATION LINKS */}
+          {/* Nav Links */}
           <nav className={styles.navLinks}>
             <Link to="/" className={isActive("/") ? styles.linkActive : ""}>
               Home
@@ -92,7 +95,7 @@ const TopBar = () => {
             </Link>
           </nav>
 
-          {/* 3. ACTIONS */}
+          {/* Actions */}
           <div className={styles.actions}>
             {isAuthenticated ? (
               <div className={styles.userProfile}>
@@ -110,16 +113,20 @@ const TopBar = () => {
               </div>
             ) : (
               <div className={styles.authButtons}>
+                {/* Changed to use handleLoginClick/handleSignupClick */}
                 <button className={styles.loginBtn} onClick={handleLoginClick}>
                   LOGIN
                 </button>
-                <button className={styles.loginBtn} onClick={handleSignupClick}>
+                <button
+                  className={styles.signupBtn}
+                  onClick={handleSignupClick}
+                >
                   SIGN UP
                 </button>
               </div>
             )}
 
-            {/* Book Now Button (Desktop) */}
+            {/* Book Now Button */}
             <button className={styles.bookBtn} onClick={handleBookNow}>
               BOOK NOW
             </button>
@@ -162,19 +169,13 @@ const TopBar = () => {
             <div className={styles.mobileAuthRow}>
               <button
                 className={styles.mobileAuthBtn}
-                onClick={() => {
-                  handleLinkClick();
-                  handleLoginClick();
-                }}
+                onClick={handleLoginClick}
               >
                 LOGIN
               </button>
               <button
                 className={styles.mobileAuthBtn}
-                onClick={() => {
-                  handleLinkClick();
-                  handleSignupClick();
-                }}
+                onClick={handleSignupClick}
               >
                 SIGN UP
               </button>
@@ -186,13 +187,7 @@ const TopBar = () => {
           )}
 
           <div className={styles.mobileBtnWrapper}>
-            <button
-              className={styles.contactBtnMobile}
-              onClick={() => {
-                handleLinkClick();
-                handleBookNow();
-              }}
-            >
+            <button className={styles.contactBtnMobile} onClick={handleBookNow}>
               BOOK NOW
             </button>
           </div>
