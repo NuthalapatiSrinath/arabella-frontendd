@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -26,26 +26,46 @@ const monthNames = [
   "December",
 ];
 
-const BookingSidebar = ({ onSearch }) => {
+const BookingSidebar = ({ onSearch, initialData }) => {
   // --- STATE ---
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [checkoutDate, setCheckoutDate] = useState(null);
 
-  // Active dropdown state
+  // Dates state
+  const [selectedDate, setSelectedDate] = useState(
+    initialData?.checkIn ? new Date(initialData.checkIn) : null
+  );
+  const [checkoutDate, setCheckoutDate] = useState(
+    initialData?.checkOut ? new Date(initialData.checkOut) : null
+  );
+
   const [activeDatePopup, setActiveDatePopup] = useState(null);
   const [expandedStay, setExpandedStay] = useState(false);
-
-  // Guest State
   const [showGuestPopup, setShowGuestPopup] = useState(false);
-  const [rooms, setRooms] = useState([{ id: 1, adults: 2, children: 0 }]);
 
-  // --- LOGIC ---
+  // ... inside BookingSidebar component ...
+  const [rooms, setRooms] = useState(() => {
+    if (initialData) {
+      return [
+        {
+          id: 1,
+          adults: initialData.guests || 1, // ✅ Change fallback to 1
+          children: initialData.children || 0,
+        },
+      ];
+    }
+    // ✅ CHANGED: adults: 1 (was 2)
+    return [{ id: 1, adults: 1, children: 0 }];
+  });
+
+  // Calculate Totals
+  const totalAdults = rooms.reduce((acc, r) => acc + r.adults, 0);
+  const totalChildren = rooms.reduce((acc, r) => acc + r.children, 0);
+
+  // --- CALENDAR LOGIC ---
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const isBeforeToday = (date) => date < today;
-
   const getDaysInMonth = (date) =>
     new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const getFirstDayOfMonth = (date) => {
@@ -67,15 +87,15 @@ const BookingSidebar = ({ onSearch }) => {
     );
     if (isBeforeToday(clickedDate)) return;
 
+    // Reset checkout if new start date is picked
     setSelectedDate(clickedDate);
     setCheckoutDate(null);
     setExpandedStay(false);
 
-    if (activeDatePopup === clickedDate.getTime()) {
-      setActiveDatePopup(null);
-    } else {
-      setActiveDatePopup(clickedDate.getTime());
-    }
+    // Toggle popup
+    setActiveDatePopup(
+      activeDatePopup === clickedDate.getTime() ? null : clickedDate.getTime()
+    );
   };
 
   const handleStaySelect = (nights) => {
@@ -95,11 +115,9 @@ const BookingSidebar = ({ onSearch }) => {
   const addRoom = () =>
     setRooms([...rooms, { id: rooms.length + 1, adults: 1, children: 0 }]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
-  const totalGuests = rooms.reduce((acc, r) => acc + r.adults + r.children, 0);
 
-  // --- HELPER: Booking Summary Text ---
   const getSummaryText = () => {
-    if (!selectedDate || !checkoutDate) return "No date selected";
+    if (!selectedDate || !checkoutDate) return "Select Check-in & Check-out";
 
     const startStr = selectedDate.toLocaleDateString("en-US", {
       month: "short",
@@ -113,33 +131,32 @@ const BookingSidebar = ({ onSearch }) => {
       (checkoutDate - selectedDate) / (1000 * 60 * 60 * 24)
     );
 
-    return `${startStr} - ${endStr}, ${nights} nights`;
+    return `${startStr} - ${endStr} (${nights} night${nights > 1 ? "s" : ""})`;
   };
 
-  // --- INTEGRATION HELPER (NEW) ---
+  // --- ⚡️ SEARCH HANDLER (Fixed Validation) ---
   const handleSearchClick = () => {
-    // 1. Determine Start Date (Default to today if null)
-    const start = selectedDate || new Date();
+    console.log("🖱️ Sidebar: Search Clicked");
 
-    // 2. Determine End Date (Default to tomorrow if null)
-    let end = checkoutDate;
-    if (!end) {
-      end = new Date(start);
-      end.setDate(end.getDate() + 1);
+    // 🛑 VALIDATION: Block if dates are missing
+    if (!selectedDate || !checkoutDate) {
+      alert("Please select both Check-in and Check-out dates.");
+      return;
     }
 
-    // 3. Calculate Totals
-    const totalAdults = rooms.reduce((acc, r) => acc + r.adults, 0);
-    const totalChildren = rooms.reduce((acc, r) => acc + r.children, 0);
-    const totalPeople = totalAdults + totalChildren;
-
-    // 4. Pass Data to Parent (RoomsPage)
-    onSearch({
-      checkIn: start,
-      checkOut: end,
-      guests: totalPeople > 0 ? totalPeople : 1, // Ensure at least 1 guest
+    const searchPayload = {
+      checkIn: selectedDate,
+      checkOut: checkoutDate,
+      guests: totalAdults, // Mapped to 'adults' in API
+      children: totalChildren, // Mapped to 'children' in API
       rooms: rooms.length,
-    });
+    };
+
+    console.log("📤 Sidebar Sending:", searchPayload);
+
+    if (onSearch) {
+      onSearch(searchPayload);
+    }
   };
 
   // --- RENDER HELPERS ---
@@ -148,24 +165,18 @@ const BookingSidebar = ({ onSearch }) => {
     for (let i = 1; i <= 30; i++) {
       const tempDate = new Date(baseDate);
       tempDate.setDate(baseDate.getDate() + i);
-      const dateStr = tempDate.toLocaleDateString("en-US", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-      });
       options.push({
         nights: i,
-        label: `${i} night${i > 1 ? "s" : ""} (${dateStr})`,
+        label: `${i} night${i > 1 ? "s" : ""} (${tempDate.toLocaleDateString(
+          "en-US",
+          { month: "short", day: "numeric" }
+        )})`,
       });
     }
-    const initialOptions = options.slice(0, 5);
-    const moreOptions = options.slice(5);
-
     return (
       <div className={styles.stayPopup} onClick={(e) => e.stopPropagation()}>
-        <div className={styles.stayHeader}>Available length of stay</div>
         <div className={styles.stayList}>
-          {initialOptions.map((opt) => (
+          {options.slice(0, 5).map((opt) => (
             <button
               key={opt.nights}
               className={styles.stayOption}
@@ -174,24 +185,6 @@ const BookingSidebar = ({ onSearch }) => {
               {opt.label}
             </button>
           ))}
-          {!expandedStay && (
-            <button
-              className={styles.moreOptionsBtn}
-              onClick={() => setExpandedStay(true)}
-            >
-              More options <ChevronDown size={14} />
-            </button>
-          )}
-          {expandedStay &&
-            moreOptions.map((opt) => (
-              <button
-                key={opt.nights}
-                className={styles.stayOption}
-                onClick={() => handleStaySelect(opt.nights)}
-              >
-                {opt.label}
-              </button>
-            ))}
         </div>
       </div>
     );
@@ -201,48 +194,44 @@ const BookingSidebar = ({ onSearch }) => {
     const days = [];
     const totalDays = getDaysInMonth(currentDate);
     const startDay = getFirstDayOfMonth(currentDate);
-
-    for (let i = 0; i < startDay; i++) {
+    for (let i = 0; i < startDay; i++)
       days.push(
         <div
           key={`empty-${i}`}
           className={`${styles.dayCell} ${styles.empty}`}
         ></div>
       );
-    }
-
     for (let day = 1; day <= totalDays; day++) {
       const thisDate = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
         day
       );
-      const isPast = isBeforeToday(thisDate);
       const isSelected =
         selectedDate && thisDate.getTime() === selectedDate.getTime();
-      const isActivePopup = activeDatePopup === thisDate.getTime();
+      const isActive = activeDatePopup === thisDate.getTime();
 
-      let className = styles.dayCell;
-      if (isPast) className += ` ${styles.disabled}`;
-      else if (isSelected) className += ` ${styles.selected}`;
+      let cellClass = styles.dayCell;
+      if (isBeforeToday(thisDate)) cellClass += ` ${styles.disabled}`;
+      else if (isSelected) cellClass += ` ${styles.selected}`;
       else if (checkoutDate && thisDate.getTime() === checkoutDate.getTime())
-        className += ` ${styles.selected}`;
+        cellClass += ` ${styles.selected}`;
       else if (
         selectedDate &&
         checkoutDate &&
         thisDate > selectedDate &&
         thisDate < checkoutDate
       )
-        className += ` ${styles.inRange}`;
+        cellClass += ` ${styles.inRange}`;
 
       days.push(
         <div
           key={day}
-          className={className}
+          className={cellClass}
           onClick={() => handleDateClick(day)}
         >
           {day}
-          {isActivePopup && renderStayPopup(thisDate)}
+          {isActive && renderStayPopup(thisDate)}
         </div>
       );
     }
@@ -252,7 +241,6 @@ const BookingSidebar = ({ onSearch }) => {
   return (
     <div className={styles.sidebarContainer}>
       <div className={styles.header}>Search & book</div>
-
       <div className={styles.calendarWrapper}>
         <div className={styles.monthNav}>
           <button className={styles.navBtn} onClick={() => changeMonth(-1)}>
@@ -265,7 +253,6 @@ const BookingSidebar = ({ onSearch }) => {
             <ChevronRight size={20} />
           </button>
         </div>
-
         <div className={styles.daysGrid}>
           {daysOfWeek.map((d) => (
             <div key={d} className={styles.dayName}>
@@ -274,55 +261,53 @@ const BookingSidebar = ({ onSearch }) => {
           ))}
           {renderDays()}
         </div>
-
-        {/* Summary Row inside Calendar Wrapper */}
         <div className={styles.summaryRow}>
           <span>{getSummaryText()}</span>
-          <span>Prices in EUR</span>
-        </div>
-        <div className={styles.checkInInfo}>
-          <span className={styles.stripedIcon}></span>
-          <span>No check-in</span>
         </div>
       </div>
 
       <div className={styles.infoSection}>
+        {/* ✅ DISPLAY: 1 Room, 2 Adults, 3 Children */}
         <button
           className={styles.guestInput}
           onClick={() => setShowGuestPopup(true)}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <User size={18} />
-            {rooms.length} room{rooms.length > 1 ? "s" : ""}, {totalGuests}{" "}
-            guest{totalGuests > 1 ? "s" : ""}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "0.85rem",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <User size={16} />
+            {rooms.length} Room{rooms.length > 1 ? "s" : ""}, {totalAdults}{" "}
+            Adult{totalAdults > 1 ? "s" : ""}, {totalChildren} Child
+            {totalChildren !== 1 ? "ren" : ""}
           </div>
           <ChevronDown size={16} />
         </button>
 
-        {/* --- RIGHT SIDE GUEST POPUP --- */}
         {showGuestPopup && (
           <div className={styles.guestPopup}>
             <div className={styles.popupHeaderRow}>
-              <span className={styles.popupTitle}>
-                Choose no. of rooms and guests
-              </span>
-              <button
-                className={styles.closePopupBtn}
+              <span className={styles.popupTitle}>Guests & Rooms</span>
+              <X
+                size={16}
+                style={{ cursor: "pointer" }}
                 onClick={() => setShowGuestPopup(false)}
-              >
-                <X size={14} />
-              </button>
+              />
             </div>
-
             {rooms.map((room, index) => (
               <div key={index} className={styles.roomBlock}>
                 <div className={styles.roomHeader}>
-                  <span>Room {index + 1}:</span>
+                  <span>Room {index + 1}</span>
                   {index > 0 && (
                     <X
                       size={14}
-                      style={{ cursor: "pointer" }}
                       onClick={() => removeRoom(index)}
+                      style={{ cursor: "pointer" }}
                     />
                   )}
                 </div>
@@ -372,20 +357,17 @@ const BookingSidebar = ({ onSearch }) => {
                 </div>
               </div>
             ))}
-
             <button className={styles.addRoomBtn} onClick={addRoom}>
-              <Plus size={16} /> Add an additional room?
+              <Plus size={16} /> Add room
             </button>
-
             <button
               className={styles.saveBtn}
               onClick={() => setShowGuestPopup(false)}
             >
-              SAVE
+              DONE
             </button>
           </div>
         )}
-        {/* UPDATED: onClick now calls handleSearchClick */}
         <button className={styles.searchBtn} onClick={handleSearchClick}>
           SEARCH
         </button>

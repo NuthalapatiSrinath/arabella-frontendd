@@ -2,16 +2,37 @@ import React from "react";
 import styles from "./SearchSummary.module.css";
 
 const SearchSummary = ({ searchData, onEdit }) => {
-  const { checkIn, checkOut, guests, rooms } = searchData;
+  // Destructure all fields including children
+  const { checkIn, checkOut, guests, children, rooms } = searchData;
 
   // Helpers to format dates like "19 Dec"
-  const formatDate = (date) => date.getDate();
-  const formatMonth = (date) =>
-    date.toLocaleString("default", { month: "short" });
-  const formatDay = (date) =>
-    date.toLocaleString("default", { weekday: "long" });
+  const formatDate = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.getDate();
+  };
 
-  const nights = Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+  const formatMonth = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.toLocaleString("default", { month: "short" });
+  };
+
+  const formatDay = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.toLocaleString("default", { weekday: "long" });
+  };
+
+  const nights =
+    checkIn && checkOut
+      ? Math.max(
+          1,
+          Math.round(
+            (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)
+          )
+        )
+      : 1;
 
   return (
     <div className={styles.summaryCard}>
@@ -42,13 +63,19 @@ const SearchSummary = ({ searchData, onEdit }) => {
 
         <div className={styles.detailsList}>
           <div className={styles.detailRow}>
-            <span className={styles.label}>Number of nights:</span>
-            <span className={styles.value}>{nights} nights</span>
-          </div>
-          <div className={styles.detailRow}>
-            <span className={styles.label}>Number of rooms:</span>
+            <span className={styles.label}>Stay Duration:</span>
             <span className={styles.value}>
-              {rooms} rooms, {guests} guests
+              {nights} Night{nights > 1 ? "s" : ""}
+            </span>
+          </div>
+
+          {/* ✅ UPDATED: Shows breakdown instead of generic 'Guests' */}
+          <div className={styles.detailRow}>
+            <span className={styles.label}>Selection:</span>
+            <span className={styles.value}>
+              {rooms} Room{rooms > 1 ? "s" : ""}, <br />
+              {guests} Adult{guests > 1 ? "s" : ""}, {children} Child
+              {children !== 1 ? "ren" : ""}
             </span>
           </div>
         </div>

@@ -1,55 +1,74 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { openModal } from "../../redux/slices/modalSlice"; // ❌ No longer needed for auth
 import { logout } from "../../redux/slices/authSlice";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, ChevronDown, Calendar } from "lucide-react"; // ✅ Added Icons
 import styles from "./TopBar.module.css";
 
 const TopBar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ Initialize hook
+  const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // ✅ New State for Dropdown
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Close dropdown when clicking outside
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleLinkClick = () => setIsMenuOpen(false);
   const isActive = (path) => location.pathname === path;
 
-  // --- NEW HANDLERS ---
-
   const handleLoginClick = () => {
-    navigate("/login"); // ✅ Go to Login Page
+    navigate("/login");
     setIsMenuOpen(false);
   };
 
   const handleSignupClick = () => {
-    navigate("/signup"); // ✅ Go to Signup Page
+    navigate("/signup");
     setIsMenuOpen(false);
   };
 
   const handleLogout = () => {
     dispatch(logout());
     setIsMenuOpen(false);
+    setShowDropdown(false); // Close dropdown
     navigate("/");
   };
 
-  // ✅ UPDATED BOOK NOW LOGIC
   const handleBookNow = () => {
     if (isAuthenticated) {
-      navigate("/rooms"); // If logged in -> Go to Rooms
+      navigate("/rooms");
     } else {
-      navigate("/login"); // If not logged in -> Go to Login
+      navigate("/login");
     }
     setIsMenuOpen(false);
+  };
+
+  // ✅ New Handler for My Bookings
+  const handleMyBookings = () => {
+    navigate("/my-bookings");
+    setShowDropdown(false);
   };
 
   return (
@@ -98,22 +117,37 @@ const TopBar = () => {
           {/* Actions */}
           <div className={styles.actions}>
             {isAuthenticated ? (
-              <div className={styles.userProfile}>
+              // ✅ UPDATED USER PROFILE WITH DROPDOWN
+              <div
+                className={styles.userProfile}
+                ref={dropdownRef}
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
                 <div className={styles.userName}>
                   <User size={16} />
                   <span>{user?.name?.split(" ")[0]}</span>
+                  <ChevronDown size={14} /> {/* Dropdown Arrow */}
                 </div>
-                <button
-                  className={styles.logoutBtn}
-                  onClick={handleLogout}
-                  title="Logout"
-                >
-                  <LogOut size={16} />
-                </button>
+
+                {/* Dropdown Menu */}
+                {showDropdown && (
+                  <div className={styles.dropdownMenu}>
+                    <div
+                      className={styles.dropdownItem}
+                      onClick={handleMyBookings}
+                    >
+                      <Calendar size={16} />
+                      My Bookings
+                    </div>
+                    <div className={styles.dropdownItem} onClick={handleLogout}>
+                      <LogOut size={16} />
+                      Logout
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className={styles.authButtons}>
-                {/* Changed to use handleLoginClick/handleSignupClick */}
                 <button className={styles.loginBtn} onClick={handleLoginClick}>
                   LOGIN
                 </button>
@@ -164,6 +198,13 @@ const TopBar = () => {
           <Link to="/contact" onClick={handleLinkClick}>
             Contact
           </Link>
+
+          {/* Added My Bookings to Mobile Menu as well for better UX */}
+          {isAuthenticated && (
+            <Link to="/my-bookings" onClick={handleLinkClick}>
+              My Bookings
+            </Link>
+          )}
 
           {!isAuthenticated ? (
             <div className={styles.mobileAuthRow}>

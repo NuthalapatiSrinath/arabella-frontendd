@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { setCredentials } from "../../redux/slices/authSlice";
-import { loginUser } from "../../services/authService";
 import { Mail, Lock, ArrowRight } from "lucide-react";
+import { authService } from "../../services/auth.service";
+import { setCredentials } from "../../redux/slices/authSlice";
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import styles from "./AuthStyles.module.css";
 
@@ -25,20 +25,33 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const res = await loginUser({
+      // 1. Attempt Login
+      const res = await authService.login({
         email: formData.email,
         password: formData.password,
       });
 
-      // Save to Redux
-      dispatch(setCredentials({ user: res.data, token: res.token }));
+      if (res.success) {
+        // 2. Save User to Redux
+        dispatch(
+          setCredentials({
+            user: res.data,
+            token: res.token,
+          })
+        );
 
-      // ✅ Redirect to Rooms Page after login
-      navigate("/rooms");
+        // 3. Redirect to Dashboard/Home
+        navigate("/rooms");
+      }
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Invalid credentials. Please try again."
-      );
+      console.error("Login Error:", err);
+      // Handle specifically unverified email errors if your backend sends specific codes
+      const msg = err.response?.data?.message || "Invalid credentials.";
+      if (msg.toLowerCase().includes("verify")) {
+        setError("Please verify your email address before logging in.");
+      } else {
+        setError(msg);
+      }
     } finally {
       setLoading(false);
     }
@@ -52,6 +65,7 @@ const LoginPage = () => {
       {error && <div className={styles.errorMsg}>{error}</div>}
 
       <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Email */}
         <div className={styles.inputGroup}>
           <Mail size={20} className={styles.icon} />
           <input
@@ -65,17 +79,33 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className={styles.inputGroup}>
-          <Lock size={20} className={styles.icon} />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+        {/* Password */}
+        <div>
+          <div className={styles.inputGroup}>
+            <Lock size={20} className={styles.icon} />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </div>
+          {/* Forgot Password Link */}
+          <div style={{ textAlign: "right", marginTop: "8px" }}>
+            <Link
+              to="/forgot-password"
+              style={{
+                fontSize: "0.85rem",
+                color: "#666",
+                textDecoration: "none",
+              }}
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </div>
 
         <button type="submit" className={styles.submitBtn} disabled={loading}>

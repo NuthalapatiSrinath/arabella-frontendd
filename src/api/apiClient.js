@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // ⚠️ CHANGE THIS if your backend runs on a different port/URL
-const BASE_URL = "http://localhost:4000/api";
+const BASE_URL = "https://arabella-backend.vercel.app/api/";
 
 const apiClient = axios.create({
   baseURL: BASE_URL,

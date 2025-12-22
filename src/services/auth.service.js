@@ -2,11 +2,9 @@ import apiClient from "../api/apiClient";
 import { API_ROUTES } from "../api/routes";
 
 export const authService = {
+  // --- EXISTING METHODS ---
   login: async (credentials) => {
-    // credentials = { email, password }
     const response = await apiClient.post(API_ROUTES.AUTH.LOGIN, credentials);
-
-    // Auto-save token and user data
     if (response.data.success) {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.data));
@@ -25,10 +23,21 @@ export const authService = {
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    // Optional: window.location.reload();
   },
 
   getCurrentUser: () => {
     return JSON.parse(localStorage.getItem("user"));
+  },
+
+  // --- ✅ NEW METHODS ADDED ---
+  forgotPassword: async (email) => {
+    return await apiClient.post(API_ROUTES.AUTH.FORGOT_PASSWORD, { email });
+  },
+
+  resetPassword: async (token, newPassword) => {
+    return await apiClient.post(API_ROUTES.AUTH.RESET_PASSWORD, {
+      token,
+      password: newPassword,
+    });
   },
 };

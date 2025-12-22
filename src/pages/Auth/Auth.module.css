@@ -90,3 +90,87 @@
   margin-bottom: 20px;
   border: 1px solid #fecaca;
 }
+/* Auth.module.css */
+
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 20px;
+}
+
+.authCard {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.authCard h2 {
+  font-size: 1.5rem;
+  color: #111;
+  margin: 0;
+}
+
+.authCard p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.primaryBtn {
+  background-color: #222;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.primaryBtn:hover {
+  background-color: #c5a365;
+}
+
+.secondaryBtn {
+  background-color: transparent;
+  color: #666;
+  border: 1px solid #e0e0e0;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.secondaryBtn:hover {
+  border-color: #222;
+  color: #222;
+}
+
+/* Loading Spinner Animation */
+.spin {
+  animation: spin 1s linear infinite;
+  color: #c5a365;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

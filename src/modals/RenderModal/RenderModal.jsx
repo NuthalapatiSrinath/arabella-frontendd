@@ -6,18 +6,18 @@ import MainModal from "../MainModal/MainModal";
 
 // ✅ Import ALL your modals here
 import BookingModal from "../BookingModal/BookingModal";
-import AuthModal from "../AuthModal/AuthModal";
+// import AuthModal from "../AuthModal/AuthModal";
 import RoomDetailsModal from "../RoomDetailsModal/RoomDetailsModal"; // <--- Make sure this is imported
 
 function RenderModal() {
   // 1. Get the active modal type and data from Redux
   const activeModal = useSelector((state) => state.modal.type);
-  const modalData = useSelector((state) => state.modal.modalData);
+  // const modalData = useSelector((state) => state.modal.modalData);
 
   // 2. Map the "type" string to the actual Component
   const allModals = {
     bookingModal: <BookingModal />,
-    authModal: <AuthModal initialMode={modalData?.mode || "login"} />,
+    // authModal: <AuthModal initialMode={modalData?.mode || "login"} />,
     roomDetails: <RoomDetailsModal />, // <--- ✅ REGISTER IT HERE
   };
 

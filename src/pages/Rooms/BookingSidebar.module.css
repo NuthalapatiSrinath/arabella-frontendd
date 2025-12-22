@@ -1,3 +1,5 @@
+/* src/pages/Rooms/BookingSidebar.module.css */
+
 .sidebarContainer {
   background: white;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
@@ -66,34 +68,23 @@
   justify-content: center;
   font-size: 0.9rem;
   cursor: pointer;
-  border-radius: 0; /* Square edges like image */
+  border-radius: 0;
   color: #333;
   position: relative;
   font-weight: 600;
-}
-
-/* The little chevron next to date number (optional visual flair from image) */
-.dayCell::after {
-  /* content: '⌄'; */ /* Uncomment if you really want the tiny arrow on every date */
-  font-size: 8px;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-  color: #ccc;
 }
 
 .dayCell:hover:not(.disabled):not(.selected):not(.inRange) {
   background-color: #f0f0f0;
 }
 
-/* Selection Styles */
 .selected {
-  background-color: #a39076 !important; /* Dark Gold */
+  background-color: #a39076 !important;
   color: white !important;
 }
 
 .inRange {
-  background-color: #dcd0c0 !important; /* Lighter Gold */
+  background-color: #dcd0c0 !important;
   color: #333 !important;
 }
 
@@ -173,7 +164,7 @@
   justify-content: space-between;
 }
 
-/* --- SUMMARY SECTION (Below Calendar) --- */
+/* --- SUMMARY SECTION --- */
 .summaryRow {
   display: flex;
   justify-content: space-between;
@@ -243,30 +234,39 @@
   background-color: #a39076;
 }
 
-/* --- RIGHT SIDE GUEST POPUP --- */
+/* --- 🔥 FIXED POPUP POSITIONING --- */
 .guestPopup {
   position: absolute;
-  top: 0; /* Align top with the input section or adjust as needed */
-  left: 360px; /* Push to the right of the 350px sidebar + gap */
-  width: 300px;
+  /* Option 1: Dropdown directly below the input */
+  top: 75px;
+  left: 20px;
+  width: calc(100% - 40px); /* Match width of input container */
+
+  /* Option 2 (If you prefer side):
+     top: 0;
+     left: 102%; 
+     width: 300px; 
+  */
+
   background: white;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  z-index: 200;
+  z-index: 9999; /* Higher than anything else */
   border-radius: 6px;
+  border: 1px solid #eee;
   animation: slideIn 0.2s ease-out;
 }
 
-/* Arrow pointing Left */
+/* Small Arrow on top of popup pointing up to the input */
 .guestPopup::before {
   content: "";
   position: absolute;
-  top: 30px; /* Align with input */
-  left: -8px;
-  border-width: 8px 8px 8px 0;
+  top: -8px;
+  left: 20px;
+  border-width: 0 8px 8px 8px;
   border-style: solid;
-  border-color: transparent white transparent transparent;
-  filter: drop-shadow(-2px 0 2px rgba(0, 0, 0, 0.05));
+  border-color: transparent transparent white transparent;
+  filter: drop-shadow(0 -2px 2px rgba(0, 0, 0, 0.05));
 }
 
 .popupHeaderRow {
@@ -374,10 +374,10 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
