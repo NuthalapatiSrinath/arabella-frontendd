@@ -817,31 +817,32 @@
   .amenityWrapper {
     flex-shrink: 0;
   }
-}
+} /* src/pages/HomePage/sections/RoomShowcase.module.css */
+
 /* --- NEW ARRIVALS / ROOM SHOWCASE --- */
 .roomShowcase {
   padding: 80px 5%;
-  background: #fff; /* or #fdfbf7 based on image */
+  background: #fff;
   display: flex;
   gap: 60px;
   align-items: center;
-  overflow: hidden; /* Hide scrollbar overflow */
+  overflow: hidden;
   font-family: "Inter", sans-serif;
 }
 
 /* --- LEFT TEXT COLUMN --- */
 .leftTextCol {
-  flex: 0 0 300px; /* Fixed width for text area */
+  flex: 0 0 300px;
   text-align: left;
   z-index: 2;
 }
 
 .bigHeadline {
-  font-family: "Oswald", "Impact", sans-serif; /* Tall condensed font */
+  font-family: "Oswald", "Impact", sans-serif;
   font-size: 5rem;
   line-height: 0.9;
   text-transform: uppercase;
-  color: #a8a2d1; /* Light Purple for "ALL THAT'S" */
+  color: #a8a2d1;
   margin-bottom: 5px;
   font-weight: 700;
 }
@@ -849,7 +850,7 @@
 .bigHeadline span {
   display: block;
   font-size: 7rem;
-  color: #4a148c; /* Dark Purple for "NEW!" */
+  color: #4a148c;
   margin-top: -10px;
 }
 
@@ -875,9 +876,9 @@
 
 /* --- RIGHT SLIDER SECTION --- */
 .sliderContainer {
-  flex: 1; /* Takes remaining space */
+  flex: 1;
   position: relative;
-  min-width: 0; /* Prevents flex overflow */
+  min-width: 0;
 }
 
 /* Navigation Buttons */
@@ -905,7 +906,7 @@
 }
 .prevBtn {
   left: -25px;
-} /* Pull slightly out */
+}
 .nextBtn {
   right: -25px;
 }
@@ -916,17 +917,17 @@
   gap: 30px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 20px 5px; /* Padding for shadows */
+  padding: 20px 5px;
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
 .cardStrip::-webkit-scrollbar {
   display: none;
-} /* Chrome/Safari */
+}
 
 /* --- HOTEL CARD --- */
 .hotelCard {
-  flex: 0 0 380px; /* Fixed card width */
+  flex: 0 0 380px;
   background: white;
   border: 1px solid #f0f0f0;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -963,7 +964,7 @@
 .cardTitle {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #4a148c; /* Purple Title */
+  color: #4a148c;
   margin-bottom: 15px;
   line-height: 1.2;
 }
@@ -973,7 +974,7 @@
   color: #666;
   line-height: 1.6;
   margin-bottom: 20px;
-  flex: 1; /* Pushes footer down */
+  flex: 1;
 }
 
 /* Amenities Icons Grid */

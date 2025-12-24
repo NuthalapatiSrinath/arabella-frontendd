@@ -1,21 +1,18 @@
-import { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { openModal } from "../redux/slices/modalSlice";
+import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const location = useLocation();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      // If they try to access a protected route, show the login modal
-      dispatch(openModal({ type: "authModal", modalData: { mode: "login" } }));
-    }
-  }, [isAuthenticated, dispatch]);
+  if (!isAuthenticated) {
+    // Redirect to login, but remember where they were trying to go
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
 
-  // If logged in, show the page. If not, redirect to Home.
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+  // If authenticated, render the child routes (e.g., Checkout, MyBookings)
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

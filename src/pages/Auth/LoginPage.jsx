@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom"; // ✅ Import useLocation
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { authService } from "../../services/auth.service";
 import { setCredentials } from "../../redux/slices/authSlice";
@@ -10,6 +10,7 @@ import styles from "./AuthStyles.module.css";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ Access state passed from RateTable
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -40,12 +41,19 @@ const LoginPage = () => {
           })
         );
 
-        // 3. Redirect to Dashboard/Home
-        navigate("/rooms");
+        // 3. ✅ Smart Redirect Logic
+        // If we have a return destination (e.g., Checkout), go there with data.
+        // Otherwise, go to default page (Rooms).
+        if (location.state?.from) {
+          navigate(location.state.from, {
+            state: location.state.bookingData,
+          });
+        } else {
+          navigate("/rooms");
+        }
       }
     } catch (err) {
       console.error("Login Error:", err);
-      // Handle specifically unverified email errors if your backend sends specific codes
       const msg = err.response?.data?.message || "Invalid credentials.";
       if (msg.toLowerCase().includes("verify")) {
         setError("Please verify your email address before logging in.");

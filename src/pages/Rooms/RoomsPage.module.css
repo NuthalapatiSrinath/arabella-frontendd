@@ -1,175 +1,83 @@
-/* RoomsPage.module.css */
-
 .pageContainer {
-  background-color: #f9f9f9;
+  background-color: #f8f9fa;
   min-height: 100vh;
-  padding: 0 0 60px 0;
-  font-family: var(--Font_Family, "Helvetica", "Arial", sans-serif);
+  padding-bottom: 60px;
 }
 
-/* --- HERO SECTION STYLES --- */
 .heroSection {
-  /* Default Desktop Height */
-  height: 60vh;
-  min-height: 400px; /* Prevents it from getting too short on wide/short screens */
-
-  /* High quality bedroom/interior image */
+  height: 40vh;
+  min-height: 300px;
   background-image: url("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80");
   background-size: cover;
   background-position: center;
   position: relative;
-  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -60px; /* Pull sidebar up slightly */
 }
 
 .heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   color: white;
+  background: rgba(0, 0, 0, 0.3);
   padding: 20px;
+  border-radius: 8px;
 }
 
 .heroOverlay h1 {
-  font-family: "Times New Roman", Times, serif; /* Explicit fallback */
-  font-size: 4rem;
-  letter-spacing: 3px;
-  margin-bottom: 15px;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin: 0;
   text-transform: uppercase;
-  font-weight: 500;
-  line-height: 1.1;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for readability */
 }
 
-.heroOverlay p {
-  font-size: 1.2rem;
-  font-weight: 300;
-  letter-spacing: 1px;
-  max-width: 600px;
-  line-height: 1.6;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* --- CONTENT WRAPPER (Grid Layout) --- */
 .contentWrapper {
-  display: grid;
-  grid-template-columns: 320px 1fr; /* Sidebar fixed width, Rooms take rest */
-  gap: 40px;
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* --- Sidebar --- */
-.sidebarColumn {
-  position: sticky;
-  top: 100px; /* Stick with some breathing room from top */
-  height: fit-content;
-}
-
-/* --- Rooms Column --- */
-.roomsColumn {
+  padding: 0 20px;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  min-width: 0; /* Prevents flex items from overflowing grid */
+  flex-direction: column; /* ⬇️ Forces Sidebar Top, Rooms Bottom */
+  gap: 40px;
+}
+
+/* Sidebar takes full width on top */
+.sidebarColumn {
+  width: 100%;
+  z-index: 10;
+}
+
+.roomsColumn {
+  width: 100%;
 }
 
 .roomsHeader {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
 }
 
 .roomsHeader h1 {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  color: #111;
 }
 
-.roomsHeader p {
-  color: #666;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
+/* 🔥 ROOMS LIST: STRICTLY 1 PER ROW */
 .roomsList {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
+  flex-direction: column; /* ⬇️ Stack cards vertically */
+  gap: 30px; /* Space between cards */
 }
 
-/* =========================================
-   RESPONSIVE MEDIA QUERIES
-   ========================================= */
-
-/* Tablet (max-width: 1024px) */
-@media (max-width: 1024px) {
-  .heroSection {
-    height: 50vh; /* Slightly shorter on tablet */
-    min-height: 350px;
-  }
-
-  .heroOverlay h1 {
-    font-size: 3rem; /* Scale down title */
-  }
-
-  .contentWrapper {
-    grid-template-columns: 1fr; /* Stack sidebar and rooms */
-    gap: 30px;
-  }
-
-  .sidebarColumn {
-    position: static; /* Remove sticky on mobile/tablet stack */
-    margin-bottom: 10px;
-  }
+.noResults {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+  font-size: 1.1rem;
 }
 
-/* Mobile (max-width: 768px) */
-@media (max-width: 768px) {
-  .heroSection {
-    height: 45vh;
-    min-height: 300px;
-    margin-bottom: 40px;
-  }
-
-  .heroOverlay {
-    padding: 0 15px; /* Ensure text doesn't touch edges */
-  }
-
-  .heroOverlay h1 {
-    font-size: 2.2rem; /* Mobile friendly size */
-    letter-spacing: 2px;
-  }
-
-  .heroOverlay p {
-    font-size: 1rem;
-    max-width: 90%; /* Prevent text from being too wide on small screens */
-  }
-
-  .contentWrapper {
-    padding: 0 16px; /* Reduce side padding on mobile */
-  }
-}
-
-/* Small Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-  .heroSection {
-    height: 40vh; /* Compact height for phones */
-  }
-
-  .heroOverlay h1 {
-    font-size: 1.75rem; /* Ensure 'ACCOMMODATION' fits on one line if possible */
-    letter-spacing: 1px;
-  }
-
-  .roomsHeader h1 {
-    font-size: 1.75rem;
-  }
+.errorMsg {
+  color: red;
+  text-align: center;
+  padding: 20px;
 }

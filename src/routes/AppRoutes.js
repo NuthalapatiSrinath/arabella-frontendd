@@ -27,6 +27,7 @@ import ResetPasswordPage from "../pages/Auth/ResetPasswordPage";
 import BookingSuccessPage from "../pages/Booking/BookingSuccessPage";
 import CheckoutPage from "../pages/Booking/CheckoutPage";
 import MyBookingsPage from "../pages/Booking/MyBookingsPage";
+import ProfilePage from "../pages/User/ProfilePage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -47,7 +48,7 @@ export default function AppRoutes() {
           {/* DashboardLayout contains Navbar & Footer */}
           <Route path="/" element={<DashboardLayout />}>
             <Route index element={<HomePage />} />
-
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="about" element={<AboutUs />} />
             <Route path="rooms" element={<RoomsPage />} />
             <Route path="rooms/:id" element={<RoomDetailsPage />} />

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // ✅ Import Redux
 import { Check, X, PlusCircle } from "lucide-react";
 import styles from "./RateTable.module.css";
 
 const RateTable = ({ rates, room }) => {
   const navigate = useNavigate();
+  // ✅ Check Authentication Status
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const [selectedAddons, setSelectedAddons] = useState([]);
 
   const paidAmenities =
@@ -19,31 +23,42 @@ const RateTable = ({ rates, room }) => {
   };
 
   const handleBook = (ratePlan, finalPrice) => {
-    // 🔴 FIX: Create a "Clean" room object without JSX/Icons
+    // 1. Prepare Booking Data
     const cleanRoom = {
       _id: room._id,
       name: room.name,
       images: room.images,
       basePrice: room.basePrice,
       description: room.description,
-      amenities: room.amenities, // These are just data, so they are fine
-      // DO NOT include 'specs' or 'capacity' if they have icons
+      amenities: room.amenities,
     };
 
-    navigate("/checkout", {
-      state: {
-        room: cleanRoom, // ✅ Pass the clean object
-        ratePlan: ratePlan,
-        checkIn: room.checkIn ? new Date(room.checkIn) : new Date(),
-        checkOut: room.checkOut
-          ? new Date(room.checkOut)
-          : new Date(new Date().setDate(new Date().getDate() + 1)),
-        guests: room.adults || 1,
-        children: room.children || 0,
-        selectedAmenities: selectedAddons,
-        finalPrice: finalPrice,
-      },
-    });
+    const checkoutData = {
+      room: cleanRoom,
+      ratePlan: ratePlan,
+      checkIn: room.checkIn ? new Date(room.checkIn) : new Date(),
+      checkOut: room.checkOut
+        ? new Date(room.checkOut)
+        : new Date(new Date().setDate(new Date().getDate() + 1)),
+      guests: room.adults || 1,
+      children: room.children || 0,
+      selectedAmenities: selectedAddons,
+      finalPrice: finalPrice,
+    };
+
+    // 2. Auth Check & Redirection Logic
+    if (isAuthenticated) {
+      // ✅ User is logged in -> Go to Checkout
+      navigate("/checkout", { state: checkoutData });
+    } else {
+      // ❌ User NOT logged in -> Go to Login (with return instruction)
+      navigate("/login", {
+        state: {
+          from: "/checkout", // Where to go after login
+          bookingData: checkoutData, // The data to carry over
+        },
+      });
+    }
   };
 
   if (!rates || rates.length === 0) return null;

@@ -21,14 +21,12 @@ const RoomsPage = () => {
   const [isSearched, setIsSearched] = useState(
     location.state?.isSearched || false
   );
+
   const [searchParams, setSearchParams] = useState(() => {
     if (location.state?.searchParams) return location.state.searchParams;
-
-    // Default: Today to Tomorrow
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
     return {
       checkIn: today,
       checkOut: tomorrow,
@@ -39,22 +37,30 @@ const RoomsPage = () => {
     };
   });
 
-  const [rooms, setRooms] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // --- ⚡️ INSTANT LOAD ---
+  const cachedRooms = roomService.getCachedSearch({
+    checkIn: new Date(searchParams.checkIn).toISOString(),
+    checkOut: new Date(searchParams.checkOut).toISOString(),
+    adults: searchParams.guests,
+    children: searchParams.children || 0,
+  });
+
+  if (cachedRooms) console.log("⚡ RoomsPage: Instant Render from Cache!");
+  else console.log("⏳ RoomsPage: Cache Miss. Waiting for API...");
+
+  const [rooms, setRooms] = useState(cachedRooms || []);
+  const [loading, setLoading] = useState(!cachedRooms);
   const [error, setError] = useState("");
 
   const calculateNights = (start, end) => {
     const s = new Date(start);
     const e = new Date(end);
     const diff = Math.abs(e - s);
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    return days > 0 ? days : 1;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24)) || 1;
   };
 
-  // --- FETCH ROOMS (API) ---
   const fetchRooms = async (params) => {
-    console.log("🚀 RoomsPage: Calling API with...", params);
-    setLoading(true);
+    if (rooms.length === 0) setLoading(true);
     setError("");
 
     try {
@@ -65,48 +71,42 @@ const RoomsPage = () => {
         children: params.children || 0,
       };
 
+      console.log("🚀 RoomsPage: Fetching in background...");
       const res = await roomService.searchRooms(query);
-      console.log(
-        "✅ RoomsPage: Response received:",
-        res.data?.length,
-        "rooms"
-      );
 
       if (res.success) {
-        setRooms(res.data);
-      } else {
-        setRooms([]);
+        if (JSON.stringify(res.data) !== JSON.stringify(rooms)) {
+          console.log("🔄 RoomsPage: Data changed. Updating UI.");
+          setRooms(res.data);
+        } else {
+          console.log("✅ RoomsPage: Data is up-to-date.");
+        }
+      } else if (!res.isCache) {
+        if (rooms.length === 0) setRooms([]);
       }
     } catch (err) {
-      console.error("❌ RoomsPage: Fetch Error", err);
-      setError("Failed to load rooms. Please try again.");
+      console.error("❌ RoomsPage: Error", err);
+      if (rooms.length === 0) setError("Failed to load rooms.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Initial Load
   useEffect(() => {
     fetchRooms(searchParams);
     // eslint-disable-next-line
-  }, []);
+  }, [searchParams]);
 
-  // --- HANDLE SEARCH ---
   const handleSearch = (criteria) => {
-    console.log("⚡ RoomsPage: Handle Search triggered");
-
     if (criteria) {
+      console.log("🔎 RoomsPage: User triggered search");
       const nights = calculateNights(criteria.checkIn, criteria.checkOut);
       const updatedParams = { ...criteria, nights };
-
       setSearchParams(updatedParams);
       setIsSearched(true);
-
-      // 🔥 FORCE RE-FETCH ON SEARCH CLICK
+      setRooms([]);
       fetchRooms(updatedParams);
     }
-
-    // Scroll to results
     setTimeout(() => {
       document
         .getElementById("room-content")
@@ -164,8 +164,7 @@ const RoomsPage = () => {
                   Searching for{" "}
                   <strong>{formatDate(searchParams.checkIn)}</strong> -{" "}
                   <strong>{formatDate(searchParams.checkOut)}</strong>,{" "}
-                  {searchParams.nights} night(s), {searchParams.guests}{" "}
-                  Adult(s), {searchParams.children} Child(ren)
+                  {searchParams.nights} night(s), {searchParams.guests} Adult(s)
                 </p>
               </>
             ) : (

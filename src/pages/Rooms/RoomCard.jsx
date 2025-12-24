@@ -3,9 +3,10 @@ import {
   Bed,
   User,
   Maximize,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Sofa, // Icon for furniture
 } from "lucide-react";
 import styles from "./RoomCard.module.css";
 import { Link } from "react-router-dom";
@@ -31,39 +32,50 @@ const RoomCard = ({ room, isSearched, searchData }) => {
     setCurrentImgIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // --- PRICING DISPLAY LOGIC ---
+  // --- 💰 PRICING LOGIC ---
+  let displayPrice = room.basePrice;
+  let strikePrice = null;
+  let discountLabel = null;
+  let priceLabel = "/ night";
 
-  // 1. Default (Before Search): Show Discounted Base Price
-  // This matches the "1 Person" price from our new backend logic.
-  let startPrice = room.basePrice;
-  if (room.discountPercentage > 0) {
-    startPrice = Math.round(
-      room.basePrice * (1 - room.discountPercentage / 100)
-    );
-  }
-
-  let displayPrice = startPrice;
-  let label = "/ night";
-  let discountText = "";
-  let showStrikeThrough = false;
-
-  // 2. Search Result (After Search): Use backend calculated total
   if (isSearched && room.rateOptions && room.rateOptions.length > 0) {
-    const bestRate = room.rateOptions[0]; // Backend sorted/calculated rate
-    displayPrice = bestRate.totalPrice; // Total for N nights & People
-    label = `for ${searchData.nights} nights`;
+    // 1. SEARCH RESULT (Dynamic Total)
+    const bestRate = room.rateOptions[0]; // Assuming first is best/default
 
-    if (bestRate.discountText) discountText = bestRate.discountText;
+    displayPrice = bestRate.totalPrice; // e.g. 4700
+    priceLabel = `total for ${searchData.nights} night${
+      searchData.nights > 1 ? "s" : ""
+    }`;
+
+    // Check if original price exists and is higher (for strike-through)
+    if (
+      bestRate.originalPrice &&
+      bestRate.originalPrice > bestRate.totalPrice
+    ) {
+      strikePrice = bestRate.originalPrice;
+    } else if (room.basePrice * searchData.nights > bestRate.totalPrice) {
+      // Fallback: Calculate strike price manually if API doesn't send it but sends discount
+      strikePrice = room.basePrice * searchData.nights;
+    }
+
+    if (bestRate.discountText) {
+      discountLabel = bestRate.discountText;
+    }
   } else {
-    // Not searched yet: Show "Save X%" tag and Original Price strike-through
+    // 2. DEFAULT VIEW (Per Night)
     if (room.discountPercentage > 0) {
-      discountText = `Save ${room.discountPercentage}%`;
-      showStrikeThrough = true;
+      const discounted = Math.round(
+        room.basePrice * (1 - room.discountPercentage / 100)
+      );
+      displayPrice = discounted;
+      strikePrice = room.basePrice;
+      discountLabel = `Save ${room.discountPercentage}%`;
     }
   }
 
   return (
     <div className={styles.card}>
+      {/* LEFT: IMAGE SLIDER */}
       <div className={styles.imageSection}>
         <img
           src={images[currentImgIndex]}
@@ -92,44 +104,38 @@ const RoomCard = ({ room, isSearched, searchData }) => {
         )}
       </div>
 
+      {/* RIGHT: CONTENT */}
       <div className={styles.contentSection}>
         <div className={styles.textContainer}>
-          <h2 className={styles.title}>{room.name}</h2>
+          <div className={styles.headerRow}>
+            <h2 className={styles.title}>{room.name}</h2>
 
-          <div className={styles.priceInfo}>
-            <strong>From ₹{displayPrice}</strong> {label}
-            {/* Show Original Price crossed out if discounted & not searched */}
-            {showStrikeThrough && (
-              <span
-                style={{
-                  textDecoration: "line-through",
-                  color: "#999",
-                  fontSize: "0.85rem",
-                  marginLeft: "8px",
-                }}
-              >
-                ₹{room.basePrice}
-              </span>
-            )}
-            {discountText && (
-              <div
-                style={{
-                  color: "green",
-                  fontSize: "0.9rem",
-                  marginTop: "4px",
-                  fontWeight: "600",
-                }}
-              >
-                {discountText}
+            {/* PRICING BLOCK */}
+            <div className={styles.priceBlock}>
+              {strikePrice && (
+                <div className={styles.offerRow}>
+                  <span className={styles.strikePrice}>
+                    ₹{strikePrice.toLocaleString()}
+                  </span>
+                  {discountLabel && (
+                    <span className={styles.discountBadge}>
+                      {discountLabel}
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className={styles.mainPriceRow}>
+                <span className={styles.currency}>₹</span>
+                <span className={styles.finalPrice}>
+                  {displayPrice.toLocaleString()}
+                </span>
+                <span className={styles.priceLabel}>{priceLabel}</span>
               </div>
-            )}
+            </div>
           </div>
 
-          <p className={styles.desc}>
-            {room.description?.substring(0, 100)}...
-          </p>
-
-          <div className={styles.iconsRow}>
+          {/* BASIC SPECS */}
+          <div className={styles.specsRow}>
             <span title="Bed Type">
               <Bed size={16} /> {room.bedType}
             </span>
@@ -141,8 +147,27 @@ const RoomCard = ({ room, isSearched, searchData }) => {
             </span>
           </div>
 
+          {/* 🛋️ FURNITURE TAGS */}
+          {room.furniture && room.furniture.length > 0 && (
+            <div className={styles.furnitureRow}>
+              {room.furniture.slice(0, 4).map((item, index) => (
+                <span key={index} className={styles.furnitureTag}>
+                  {item}
+                </span>
+              ))}
+              {room.furniture.length > 4 && (
+                <span className={styles.moreTag}>
+                  +{room.furniture.length - 4} more
+                </span>
+              )}
+            </div>
+          )}
+
+          <p className={styles.desc}>
+            {room.description?.substring(0, 110)}...
+          </p>
+
           <div className={styles.btnRow}>
-            {/* Pass search data to next page */}
             <Link
               to={`/rooms/${room._id}`}
               state={{ searchParams: searchData, isSearched: isSearched }}

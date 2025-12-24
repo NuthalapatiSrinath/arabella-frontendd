@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// ⚠️ CHANGE THIS if your backend runs on a different port/URL
 const BASE_URL = "https://arabella-backend.vercel.app/api/";
 
 const apiClient = axios.create({
@@ -10,17 +9,15 @@ const apiClient = axios.create({
   },
 });
 
-// --- REQUEST INTERCEPTOR (Auto-Attach Token) ---
+// --- REQUEST INTERCEPTOR ---
 apiClient.interceptors.request.use(
   (config) => {
-    // We assume you store the JWT token in localStorage as "token"
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("accessToken"); // ✅ Read from Session
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // If sending FormData (images), let the browser set the Content-Type automatically
     if (config.data instanceof FormData) {
       delete config.headers["Content-Type"];
     }
@@ -30,15 +27,19 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// --- RESPONSE INTERCEPTOR (Global Error Handling) ---
+// --- RESPONSE INTERCEPTOR ---
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Optional: Auto-logout on 401 Unauthorized
     if (error.response && error.response.status === 401) {
-      // console.warn("Session expired. Redirecting to login...");
-      // localStorage.removeItem("token");
-      // window.location.href = "/login";
+      console.warn("⚠️ API: Session expired. Logging out...");
+
+      sessionStorage.removeItem("accessToken"); // ✅ Clear Session
+      sessionStorage.removeItem("user");
+
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
